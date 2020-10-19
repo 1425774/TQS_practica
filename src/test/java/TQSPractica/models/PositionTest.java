@@ -240,5 +240,67 @@ public class PositionTest {
 		}
 		
 	}
+	
+	@Test
+	public void testCoord2Chess() {
+		
+		System.out.println("[TESTING: Position->coord2Chess(int, int)]");
+		
+		int[][] payload = new int[][] {
+			{}, {1,1,1},{-1,12},{2,-1}, {2},	// Rubbish
+			{0, 7},{7,7},{0,0},{7,0},			// Limits
+			{0, 8},{7,8},{0,1},{7,1},
+			{0, 6},{7,6},{0,-1},{7,-1},
+			{-1, 7},{6,7},{-1,0},{6,0},
+			{1, 7},{8,7},{1,0},{8,0},
+			{3,4},{5,2}							// Some in the center
+		};
+		String[] solutions = new String[] {
+			null, null, null, null, null,
+			"a1","h1","a8","h8",
+			null, null,"a7","h7",
+			"a2","h2",null,null,
+			null,"g1",null,"g8",
+			"b1",null,"b8",null,
+			"d4","f6"
+		};
+		
+		for (int i = 0; i < solutions.length; i++) {
+			String aux = Position.coord2Chess(payload[i][0], payload[i][0]);
+			System.out.printf("\t>IN:%s OUT:%s EXPECTED:%s\n",payload[i], aux, solutions[i]);
+			assertEquals(solutions[i], aux);
+		}
+	}
+	
+	@Test
+	public void testChess2Coord() {
+		
+		System.out.println("[TESTING: Position->coord2Chess(int, int)]");
+		
+		int[][] solutions = new int[][] {
+			null, null, null, null, null,	// Rubbish
+			{0, 7},{7,7},{0,0},{7,0},		// Limits
+			null, null,{0,1},{7,1},
+			{0, 6},{7,6}, null, null,
+			null,{6,7}, null,{6,0},
+			{1, 7}, null,{1,0}, null,
+			{3,4},{5,2}						// Some in the center
+		};
+		String[] payload = new String[] {
+				"", "1a","11","aa", "asjq83",	// Rubbish
+				"a1","h1","a8","h8",			// Limits
+				"a0","h0","a7","h7",
+				"a2","h2","a9","h9",
+				"z1","g1","z8","g8",
+				"b1","i1","b8","i8",
+				"d4","f6"						// Some in the center
+			};
+		
+		for (int i = 0; i < solutions.length; i++) {
+			int[] aux = Position.chessd2Coord(payload[i]);
+			System.out.printf("\t>IN:%s OUT:%s EXPECTED:%s\n",payload[i], aux, solutions[i]);
+			assertEquals(solutions[i], aux);
+		}
+	}
 
 }
