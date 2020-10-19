@@ -1,4 +1,4 @@
-package TQSPractic.models;
+package TQSPractica.models;
 
 public abstract class Piece {
 

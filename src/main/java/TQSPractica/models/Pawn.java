@@ -1,4 +1,4 @@
-package TQSPractic.models;
+package TQSPractica.models;
 
 public class Pawn extends Piece {
 
