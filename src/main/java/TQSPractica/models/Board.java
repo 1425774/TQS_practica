@@ -1,5 +1,8 @@
 package TQSPractica.models;
+import TQSPractica.Player;
 
-public class Board {
+public interface Board {
+	
+	public void getPositions(Player player);
 
 }

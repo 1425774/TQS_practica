@@ -1,5 +1,22 @@
 package TQSPractica.models;
 
-public class Pawn extends Piece {
+import TQSPractica.Player;
 
+public class Pawn extends Piece {
+	
+	public Pawn(Board board,Position initial_position, Player owner) {
+		super(board, initial_position, owner, 0);
+	}
+
+	@Override
+	protected void generatePossibleMoves() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean moveTo(Position pos) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
