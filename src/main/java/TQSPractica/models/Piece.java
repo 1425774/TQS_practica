@@ -37,9 +37,7 @@ public abstract class Piece {
 	}
 
 	@Override
-	public String toString() {
-		return null;
-	}
+	abstract public String toString();
 
 	protected abstract void generatePossibleMoves();	
 	public abstract boolean moveTo(Position pos);
