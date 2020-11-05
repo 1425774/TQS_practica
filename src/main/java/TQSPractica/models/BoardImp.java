@@ -1,13 +1,15 @@
 package TQSPractica.models;
 
+import java.util.List;
+
 import TQSPractica.Player;
 
 public class BoardImp implements Board{
 
 	@Override
-	public void getPositions(Player player) {
+	public List<Piece> getPices(Player player) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }

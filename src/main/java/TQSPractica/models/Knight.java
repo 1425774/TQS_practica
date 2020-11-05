@@ -20,4 +20,10 @@ public class Knight extends Piece {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
