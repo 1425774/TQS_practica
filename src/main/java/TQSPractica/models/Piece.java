@@ -1,5 +1,7 @@
 package TQSPractica.models;
 
+import java.util.Arrays;
+
 import TQSPractica.Player;
 
 public abstract class Piece {
@@ -30,9 +32,13 @@ public abstract class Piece {
 		
 	}
 	
-	
 	public int getPieceValue() {
 		return pieceValue;
+	}
+
+	@Override
+	public String toString() {
+		return null;
 	}
 
 	protected abstract void generatePossibleMoves();	
