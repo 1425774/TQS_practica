@@ -220,18 +220,43 @@ public class PawnTest {
 	public void testGetPossibleMoves() {
 		System.out.println("[TESTING: Pawn->GetPieceValue()] : Value of the piece");
 		
-		// Starting move
+		// Starting
 		MockBoard b = new MockBoard();
 		Position e2 = new Position("e2");
-		Position e4 = new Position("e4");
 		Position e3 = new Position("e3");
+		Position e4 = new Position("e4");
 		Position e5 = new Position("e5");
+		Position e6 = new Position("e6");
+		Position d6 = new Position("d5");
+		Position d5 = new Position("d6");
+		Position d3 = new Position("d3");
+		Position f3 = new Position("f3");
+		Position f4 = new Position("f4");
+		Position f5 = new Position("f5");
+		Position f6 = new Position("f6");
 		Pawn p = new Pawn(b, e2, Player.WHITE);
 		
-		List<Position> res = Arrays.asList(p.getPossibleMoves());
-		List<Position> exp = Arrays.asList((new Position("e3"), new Position("e4")));
+		Position[] res = p.getPossibleMoves();
+		Position[] exp = {new Position("e3"), new Position("e4")};
+		assertTrue(res.length == exp.length);
+		for (int i = 0; i < res.length; i++) {
+			assertTrue(res[i].equals(exp[i]));
+		}
 		
+		// Taking and normal
+		b.setPiece(new Pawn(b, d3, Player.WHITE));
 		
+		b.setPiece(new Pawn(b, f3, Player.WHITE));
+		p = new Pawn(b, e5, Player.BLACK);
+		p.moveTo(e4);
+		res = p.getPossibleMoves();
+		exp = new Position[] {d3, f3, e3};
+		assertTrue(res.length == exp.length);
+		for (int i = 0; i < res.length; i++) {
+			assertTrue(res[i].equals(exp[i]));
+		}
+		b.clean();
+
 	}
 
 	@Test
