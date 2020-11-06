@@ -4,7 +4,7 @@ import TQSPractica.Player;
 
 public class Rook extends Piece {
 	
-	public Rook(Board board,Position initial_position, Player owner) {
+	public Rook(Board board,Position initial_position, Player owner) throws Exception {
 		super(board, initial_position, owner, 0);
 	}
 

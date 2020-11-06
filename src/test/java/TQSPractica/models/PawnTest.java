@@ -9,14 +9,35 @@ import org.junit.Test;
 import TQSPractica.Player;
 
 public class PawnTest {
+	
+	static boolean comaprePositionsArray(Position[] a, Position[] b) {
+		
+		if (a.length != b.length) {
+			return false;
+		}
+		
+		int c = a.length;
+		
+		for (int i = 0; i < b.length; i++) {
+			
+			for (int j = 0; j < a.length; j++) {
+				if (b[i].equals(a[j])) {
+					c--;
+				}
+			}
+		}
+		return c == 0;
+		
+	}
 
 	@Test
-	public void testToString() {
+	public void testToString() throws Exception {
 		System.out.println("[TESTING: Pawn->toString()] : String representation of the piece and it's position");
 		// A good one
 		Position pos = new Position("e4");
 		Board b = new MockBoard();
 		Pawn p = new Pawn(b, pos, Player.BLACK);
+		assertEquals("e4", p.toString());
 		
 		
 		// A bad one
@@ -38,17 +59,16 @@ public class PawnTest {
 	}
 
 	@Test
-	public void testMoveTo() {
+	public void testMoveTo() throws Exception {
 		System.out.println("[TESTING: Pawn->MoveTo()] : A valid next position given the Board");
-		
 		MockBoard board = new MockBoard();
 		Piece blocker;						// Doesn't matter which
 		Position e2 = new Position("e2");
 		Position e3 = new Position("e3");
 		Position e4 = new Position("e4");
 		Position e6 = new Position("e6");
-		Position d6 = new Position("d5");
-		Position d5 = new Position("d6");
+		Position d6 = new Position("d6");
+		Position d5 = new Position("d5");
 		Position d4 = new Position("d4");
 		Position f4 = new Position("f4");
 		Position f5 = new Position("f5");
@@ -217,7 +237,7 @@ public class PawnTest {
 	}
 
 	@Test
-	public void testGetPossibleMoves() {
+	public void testGetPossibleMoves() throws Exception {
 		System.out.println("[TESTING: Pawn->GetPieceValue()] : Value of the piece");
 		
 		// Starting
@@ -238,29 +258,22 @@ public class PawnTest {
 		
 		Position[] res = p.getPossibleMoves();
 		Position[] exp = {new Position("e3"), new Position("e4")};
-		assertTrue(res.length == exp.length);
-		for (int i = 0; i < res.length; i++) {
-			assertTrue(res[i].equals(exp[i]));
-		}
+		assertTrue(PawnTest.comaprePositionsArray(res, exp));
 		
 		// Taking and normal
 		b.setPiece(new Pawn(b, d3, Player.WHITE));
 		
 		b.setPiece(new Pawn(b, f3, Player.WHITE));
-		p = new Pawn(b, e5, Player.BLACK);
-		p.moveTo(e4);
+		p = new Pawn(b, e4, Player.BLACK);
 		res = p.getPossibleMoves();
-		exp = new Position[] {d3, f3, e3};
-		assertTrue(res.length == exp.length);
-		for (int i = 0; i < res.length; i++) {
-			assertTrue(res[i].equals(exp[i]));
-		}
+		exp = new Position[] {d3, f3, e3, e2};
+		assertTrue(PawnTest.comaprePositionsArray(res, exp));
 		b.clean();
 
 	}
 
 	@Test
-	public void testGetPieceValue() {
+	public void testGetPieceValue() throws Exception {
 		System.out.println("[TESTING: Pawn->GetPieceValue()] : Value of the piece");
 		Pawn p = new Pawn(
 					new MockBoard(),

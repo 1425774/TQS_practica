@@ -87,5 +87,9 @@ public class Position {
 		this.coordinates = new int[] {x,y};
 		return true;
 	}
+	
+	public boolean equals(Position p) {
+		return p.getTileId() == this.getTileId();
+	}
 
 }

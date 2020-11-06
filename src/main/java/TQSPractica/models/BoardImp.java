@@ -12,4 +12,22 @@ public class BoardImp implements Board{
 		return null;
 	}
 
+	@Override
+	public Piece getPieceOn(int x, int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Piece getPieceOn(int[] infront) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void move(Piece p, Position from, Position to) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
