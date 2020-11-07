@@ -15,4 +15,6 @@ public interface Board {
 
 	public int[] getDimensions();
 
+	public Piece getPieceOn(Position pos);
+
 }

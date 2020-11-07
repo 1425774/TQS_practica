@@ -59,5 +59,10 @@ public class MockBoard extends Observable implements Board {
 		return new int[] {8, 8};
 	}
 
+	@Override
+	public Piece getPieceOn(Position pos) {
+		return this.getPieceOn(pos.getCoorPosition());
+	}
+
 
 }

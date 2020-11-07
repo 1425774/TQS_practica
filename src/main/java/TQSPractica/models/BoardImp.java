@@ -36,4 +36,10 @@ public class BoardImp implements Board{
 		return null;
 	}
 
+	@Override
+	public Piece getPieceOn(Position pos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
