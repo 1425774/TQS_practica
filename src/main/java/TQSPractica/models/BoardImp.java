@@ -30,4 +30,10 @@ public class BoardImp implements Board{
 		
 	}
 
+	@Override
+	public int[] getDimensions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

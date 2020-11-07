@@ -13,4 +13,6 @@ public interface Board {
 
 	void move(Piece p, Position from, Position to);
 
+	public int[] getDimensions();
+
 }

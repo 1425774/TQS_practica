@@ -54,5 +54,10 @@ public class MockBoard extends Observable implements Board {
 		
 	}
 
+	@Override
+	public int[] getDimensions() {
+		return new int[] {8, 8};
+	}
+
 
 }

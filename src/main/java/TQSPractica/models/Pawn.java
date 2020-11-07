@@ -102,6 +102,8 @@ public class Pawn extends Piece implements Observer {
 				// Make the move and return True
 				Position curr_pos = this.getCurrentPosition();
 				this.setCurrentPosition(pos);
+				this.initial_move = false;
+				this.setPossibleMoves(null);
 				if (Math.abs(p.getCoorPosition()[1] - curr_pos.getCoorPosition()[1]) == 2) {
 					// set as an observer to the board to remove the en passant flag the next turn
 					this.enpassant_target = true;

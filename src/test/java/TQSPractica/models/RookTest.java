@@ -139,7 +139,11 @@ public class RookTest {
 		assertTrue(r.moveTo(e5));
 		assertTrue(r.moveTo(e3));
 		b.clean();
-
+		
+		// Non sense
+		r = new Rook(b, e4, Player.BLACK);
+		assertFalse(r.moveTo(null));
+		assertFalse(r.moveTo(e4));
 	}
 
 	@Test
@@ -248,7 +252,7 @@ public class RookTest {
 		r = new Rook(b, e8, Player.WHITE);
 		exp = new Position[] {
 				e1,e2,e3,e4,e5,e6,e7,
-				d8,c8
+				d8,f8
 		};
 		res = r.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));

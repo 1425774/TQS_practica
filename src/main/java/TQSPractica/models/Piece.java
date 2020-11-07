@@ -45,6 +45,9 @@ public abstract class Piece {
 		if (initial_position == null || initial_position.getChessPosition() == null) {
 			throw new Exception("Can not initialize a piece without a valid position");
 		}
+		if (board == null) {
+			throw new Exception("Can not initialize a piece without a board");
+		}
 		this.pieceValue = value;
 		this.currentPosition = initial_position;
 		this.board = board;
@@ -58,6 +61,26 @@ public abstract class Piece {
 	@Override
 	abstract public String toString();
 
-	protected abstract void generatePossibleMoves();	
-	public abstract boolean moveTo(Position pos);
+	protected abstract void generatePossibleMoves();
+	
+	// Only the Pawn needs to Override it
+	public boolean moveTo(Position pos) {
+		
+		if (pos == null) {
+			return false;
+		}
+		
+		Position[] possible_moves = this.getPossibleMoves();
+		
+		for (int i = 0; i < possible_moves.length; i++) {
+			if (pos.equals(possible_moves[i])) {
+				this.setCurrentPosition(pos);
+				this.setPossibleMoves(null);
+				return true;
+			}
+		}
+		
+		return false;
+
+	}
 }
