@@ -19,12 +19,12 @@ public class KingTest {
 	Position e7 = new Position("e7");
 	Position e8 = new Position("e8");
 	
-	Position f3 = new Position("g3");
-	Position f5 = new Position("g5");
-	Position f4 = new Position("c3");
-	Position d3 = new Position("g3");
-	Position d5 = new Position("g5");
-	Position d4 = new Position("c3");
+	Position f3 = new Position("f3");
+	Position f5 = new Position("f5");
+	Position f4 = new Position("f4");
+	Position d3 = new Position("d3");
+	Position d5 = new Position("d5");
+	Position d4 = new Position("d4");
 	
 	Position a1 = new Position("a1");
 	Position a2 = new Position("a2");
