@@ -12,6 +12,11 @@ public abstract class Piece {
 	private int pieceValue;
 	private Position currentPosition;
 	
+	// Only for testing
+	public boolean toTestLookOnDirection(int deep, int xmod, int ymod, List<Position> acum) {
+		return this.lookOnDirection(deep, xmod, ymod, acum);
+	}
+	
 	protected boolean lookOnDirection(int deep, int xmod, int ymod, List<Position> acum) {
 		int[] coor = this.getCurrentPosition().getCoorPosition();
 		Boolean ret = false;
