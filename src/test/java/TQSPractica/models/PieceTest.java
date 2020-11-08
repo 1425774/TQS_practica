@@ -103,8 +103,11 @@ public class PieceTest {
 		Piece p = new Pawn(b, new Position("e4"), Player.BLACK);
 		List<Position> acum = new ArrayList<Position>();
 		
-		// deep shall not be negative
+		// Limits and frontiers
+		// deep shall not be negative neither 0
 		// and return false on sizes bigger than the board
+		assertTrue(p.toTestLookOnDirection(1, 1, 1, acum));
+		assertFalse(p.toTestLookOnDirection(0, 1, 1, acum));
 		assertFalse(p.toTestLookOnDirection(-1, 1, 1, acum));
 		assertFalse(p.toTestLookOnDirection(Integer.MAX_VALUE, 1, 1, acum));
 		assertFalse(p.toTestLookOnDirection(9, 1, 1, acum));
@@ -126,10 +129,32 @@ public class PieceTest {
 		assertFalse(p.toTestLookOnDirection(3, 1, 2, acum));
 		
 		// acum shall not be null
-		assertTrue(p.toTestLookOnDirection(3, 0, -1, acum));
-		assertFalse(p.toTestLookOnDirection(3, -2, -1, null));
-
+		assertTrue(p.toTestLookOnDirection(1, 0, -1, acum));
+		assertFalse(p.toTestLookOnDirection(1, -1, -1, null));
 		
+		// Partitions
+		// wrong 3
+		assertFalse(p.toTestLookOnDirection(-1, -2, 2, null));
+		// wrong 2
+		assertFalse(p.toTestLookOnDirection(-1, -2, 2, acum));
+		assertFalse(p.toTestLookOnDirection(-1, 1, 1, null));
+		assertFalse(p.toTestLookOnDirection(1, -2, 2, null));
+		
+		
+		// Functionality
+		acum = new ArrayList<>();
+		List<Position> exp = new ArrayList<>();
+		exp.add(new Position("e8"));
+		exp.add(new Position("d4"));
+		exp.add(new Position("g4"));
+		assertTrue(p.toTestLookOnDirection(4, 0, -1, acum));
+		assertTrue(p.toTestLookOnDirection(1, -1, 0, acum));
+		assertTrue(p.toTestLookOnDirection(2, 1, 0, acum));
+		
+		assertTrue(exp.size() == acum.size());
+		Position[] exp2 = exp.toArray(new Position[exp.size()]);
+		Position[] res = acum.toArray(new Position[acum.size()]);
+		assertTrue(PawnTest.comaprePositionsArray(exp2, res));
 		
 	}
 	

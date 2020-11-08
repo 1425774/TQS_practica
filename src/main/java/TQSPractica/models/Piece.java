@@ -18,6 +18,11 @@ public abstract class Piece {
 	}
 	
 	protected boolean lookOnDirection(int deep, int xmod, int ymod, List<Position> acum) {
+		
+		if (deep < 1) return false;
+		if (xmod < -1 || xmod > 1 || ymod < -1 || ymod > 1) return false;
+		if (acum == null) return false;
+		
 		int[] coor = this.getCurrentPosition().getCoorPosition();
 		Boolean ret = false;
 		Boolean add = false;
@@ -69,6 +74,9 @@ public abstract class Piece {
 		}
 		if (board == null) {
 			throw new Exception("Can not initialize a piece without a board");
+		}
+		if (owner == null) {
+			throw new Exception("Can not initialize a piece without an owner");
 		}
 		this.pieceValue = value;
 		this.currentPosition = initial_position;
