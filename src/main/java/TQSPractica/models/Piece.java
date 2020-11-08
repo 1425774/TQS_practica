@@ -1,6 +1,5 @@
 package TQSPractica.models;
 
-import java.util.Arrays;
 import java.util.List;
 
 import TQSPractica.Player;
