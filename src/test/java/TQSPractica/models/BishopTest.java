@@ -149,6 +149,7 @@ public class BishopTest {
 		b.setPiece(new Queen(b, b1, Player.BLACK));
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
 		// Filled board -- Opposite team
 		bi = new Bishop(b, e4, Player.WHITE);
 		exp = new Position[] {
@@ -161,7 +162,7 @@ public class BishopTest {
 		b.setPiece(new Queen(b, b1, Player.BLACK));
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		
+		b.clean();
 		// Filled board -- Mixed
 		bi = new Bishop(b, e4, Player.WHITE);
 		exp = new Position[] {
@@ -175,7 +176,7 @@ public class BishopTest {
 		b.setPiece(new Queen(b, h7, Player.WHITE));
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		
+		b.clean();
 	}
 
 	@Test
