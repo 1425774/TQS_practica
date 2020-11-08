@@ -12,6 +12,24 @@ public abstract class Piece {
 	private int pieceValue;
 	private Position currentPosition;
 	
+	protected boolean lookOnDirection(int deep, int xmod, int ymod, List<Position> acum) {
+		int[] coor = this.getCurrentPosition().getCoorPosition();
+		Boolean ret = false;
+		Boolean add = false;
+		
+		Position aux = new Position(coor[0]+(deep*xmod), coor[1]+(deep*ymod));
+		if (aux.getTileId() != Position.ERR_NON_EXISTENT_TILE) {
+			
+			Piece p = this.getBoard().getPieceOn(aux);
+			
+			add = (p == null || p.getOwner() != this.getOwner());
+			ret = (p == null);		
+		}
+		
+		if (add) acum.add(aux);		
+		return ret;
+	}
+	
 	public Position[] getPossibleMoves() {
 		if (this.possibleMoves == null) {
 			this.generatePossibleMoves();

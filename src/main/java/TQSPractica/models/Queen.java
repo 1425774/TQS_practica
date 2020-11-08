@@ -13,59 +13,6 @@ public class Queen extends Piece {
 	public Queen(Board board,Position initial_position, Player owner) throws Exception {
 		super(board, initial_position, owner, Queen.VALUE);
 	}
-	
-	private boolean lookOnDir(int deep, int dir, List<Position> acum) {
-		
-		boolean ret = false;
-		boolean add = false;
-		int[] coor = this.getCurrentPosition().getCoorPosition();
-		
-		int x = 0, y = 0;
-		
-		// Directions
-		// 7 0 1
-		// 6 Q 2
-		// 5 4 3
-		switch (dir) {
-		case 0:
-			x = 0; y = 1;
-			break;
-		case 1:
-			x = 1; y = 1;
-			break;
-		case 2:
-			x = 1; y = 0;
-			break;
-		case 3:
-			x = 1; y = -1;
-			break;
-		case 4:
-			x = 0; y = -1;
-			break;
-		case 5:
-			x = -1; y = -1;
-			break;
-		case 6:
-			x = -1; y = 0;
-			break;
-		case 7:
-			x = -1; y = 1;
-			break;
-		}
-		
-		Position aux = new Position(coor[0]+(deep*x), coor[1]+(deep*y));
-		if (aux.getTileId() != Position.ERR_NON_EXISTENT_TILE) {
-			
-			Piece p = this.getBoard().getPieceOn(aux);
-			
-			add = (p == null || p.getOwner() != this.getOwner());
-			ret = (p == null);		
-		}
-		
-		if (add) acum.add(aux);	
-		return ret;
-		
-	}
 
 	@Override
 	protected void generatePossibleMoves() {
@@ -74,7 +21,11 @@ public class Queen extends Piece {
 		// 7 0 1
 		// 6 Q 2
 		// 5 4 3
-		
+		int[][] dir_modifiers = {
+				{-1, +1}, { 0, +1}, {+1, +1},
+				{-1,  0},           {+1,  0},
+				{-1, -1}, { 0, -1}, {+1, -1},
+		};
 		List<Position> possible_moves = new ArrayList<>();
 		boolean[] dir_stop_conditions = {
 				false, false, false, false, false, false, false, false
@@ -86,7 +37,7 @@ public class Queen extends Piece {
 			// Look all directions
 			for (int j = 0; j < 8; j++) {
 				if (!dir_stop_conditions[j])
-					dir_stop_conditions[j] = !this.lookOnDir(i, j, possible_moves);				
+					dir_stop_conditions[j] = !this.lookOnDirection(i, dir_modifiers[j][0], dir_modifiers[j][1], possible_moves);				
 			}
 			
 			i++;

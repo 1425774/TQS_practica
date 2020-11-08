@@ -13,24 +13,6 @@ public class Bishop extends Piece {
 	public Bishop(Board board,Position initial_position, Player owner) throws Exception {
 		super(board, initial_position, owner, Bishop.VALUE);
 	}
-	
-	private boolean lookOnDirection(int deep, int xmod, int ymod, List<Position> acum) {
-		int[] coor = this.getCurrentPosition().getCoorPosition();
-		Boolean ret = false;
-		Boolean add = false;
-		
-		Position aux = new Position(coor[0]+(deep*xmod), coor[1]+(deep*ymod));
-		if (aux.getTileId() != Position.ERR_NON_EXISTENT_TILE) {
-			
-			Piece p = this.getBoard().getPieceOn(aux);
-			
-			add = (p == null || p.getOwner() != this.getOwner());
-			ret = (p == null);		
-		}
-		
-		if (add) acum.add(aux);		
-		return ret;
-	}
 
 	@Override
 	protected void generatePossibleMoves() {

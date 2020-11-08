@@ -18,108 +18,32 @@ public class Rook extends Piece {
 	protected void generatePossibleMoves() {
 		List<Position> possible_moves = new ArrayList<>();
 		
-		Board b = this.getBoard();
-		int[] b_dimensions = b.getDimensions();
-		int[] coor = this.getCurrentPosition().getCoorPosition();
-		boolean stop = false;
-		boolean add_move = false;
-		int i;
+		int[][] dir_modifiers = {
+				{0, 1}, {1, 0}, {0, -1}, {-1, 0}
+		};
 		
-		// Going right
-		i = coor[0]+1;
-		while (!stop && i < b_dimensions[0]) {
+		boolean[] dir_continue = {
+				true, true, true, true
+		};
+		
+		boolean stop = false;
+		
+		int i = 1;
+		
+		while(!stop) {
 			
-			Piece p =  b.getPieceOn(new int[] {i,coor[1]});
-			
-			if (p == null) {
-				add_move = true;
-			} else {
-				stop = true;
-				
-				if (p.getOwner() != this.getOwner()) {
-					add_move = true;
-				}
-			}
-			
-			if (add_move) {
-				possible_moves.add(new Position(i,coor[1]));
-				add_move = !add_move;
-			}
+			for (int j = 0; j < dir_continue.length; j++)
+				if (dir_continue[j])
+					dir_continue[j] = this.lookOnDirection(
+								i, dir_modifiers[j][0], dir_modifiers[j][1], possible_moves
+							);
 			
 			i++;
+			for (int j = 0; j < dir_continue.length; j++)
+				stop = stop || dir_continue[j];
+			stop = !stop;
 		}
-		// Going left
-		stop = false;
-		i = coor[0]-1;
-		while (!stop && i >= 0) {
-			
-			Piece p =  b.getPieceOn(new int[] {i,coor[1]});
-			
-			if (p == null) {
-				add_move = true;
-			} else {
-				stop = true;
-				
-				if (p.getOwner() != this.getOwner()) {
-					add_move = true;
-				}
-			}
-			
-			if (add_move) {
-				possible_moves.add(new Position(i,coor[1]));
-				add_move = !add_move;
-			}
-			
-			i--;
-		}
-		// Going left
-		stop = false;
-		i = coor[1]+1;
-		while (!stop && i < b_dimensions[1]) {
-			
-			Piece p =  b.getPieceOn(new int[] {coor[0], i});
-			
-			if (p == null) {
-				add_move = true;
-			} else {
-				stop = true;
-				
-				if (p.getOwner() != this.getOwner()) {
-					add_move = true;
-				}
-			}
-			
-			if (add_move) {
-				possible_moves.add(new Position(coor[0], i));
-				add_move = !add_move;
-			}
-			
-			i++;
-		}
-		// Going right
-		stop = false;
-		i = coor[1]-1;
-		while (!stop && i >= 0) {
-			
-			Piece p =  b.getPieceOn(new int[] {coor[0], i});
-			
-			if (p == null) {
-				add_move = true;
-			} else {
-				stop = true;
-				
-				if (p.getOwner() != this.getOwner()) {
-					add_move = true;
-				}
-			}
-			
-			if (add_move) {
-				possible_moves.add(new Position(coor[0], i));
-				add_move = !add_move;
-			}
-			
-			i--;
-		}
+		
 		
 		this.setPossibleMoves(possible_moves);
 		
