@@ -6,9 +6,30 @@ import org.junit.Test;
 
 import TQSPractica.Player;
 
-public class BishopTest {
+public class QueenTest {
 	
+	Position a4 = new Position("a4");
+	Position b4 = new Position("b4");
+	Position c4 = new Position("c4");
+	Position g4 = new Position("g4");
+	Position h4 = new Position("h4");
+	
+	Position a3 = new Position("a3");
+	Position a5 = new Position("a5");
+	Position a6 = new Position("a6");
+	
+	Position c1 = new Position("c1");
+	Position d1 = new Position("d1");
+	Position f1 = new Position("f1");
+	
+	Position c8 = new Position("c8");
+	Position d8 = new Position("d8");
+	Position f8 = new Position("f8");
 
+	Position h3 = new Position("h3");
+	Position h5 = new Position("h5");
+	Position h6 = new Position("h6");
+	
 	Position e1 = new Position("e1");
 	Position e2 = new Position("e2");
 	Position e3 = new Position("e3");
@@ -52,21 +73,21 @@ public class BishopTest {
 
 	@Test
 	public void testToString() throws Exception {
-		System.out.println("[TESTING: Bishop->toString()] : String representation of the piece and it's position");
+		System.out.println("[TESTING: Queen->toString()] : String representation of the piece and it's position");
 		MockBoard b = new MockBoard();
 		
-		Bishop n = new Bishop(b, new Position("e4"), Player.BLACK);
-		assertEquals("Be4", n.toString());
+		Queen n = new Queen(b, new Position("e4"), Player.BLACK);
+		assertEquals("Qe4", n.toString());
 	}
 
 	@Test
-	public void testBishop() {
-		System.out.println("[TESTING: Bishop->Bishop()] : Testing bad parameters in constructor");
+	public void testQueen() {
+		System.out.println("[TESTING: Queen->Queen()] : Testing bad parameters in constructor");
 		// Bad one -- position
 		MockBoard b = new MockBoard();
 		Position bad = new Position("lskdjlsk");
 		try {
-			Bishop n2 = new Bishop(b, bad, Player.BLACK);
+			Queen n2 = new Queen(b, bad, Player.BLACK);
 			fail("Should throw exception a bad position.");
 		} catch (Exception e) {
 			// It worked
@@ -74,7 +95,7 @@ public class BishopTest {
 		
 		bad = null;
 		try {
-			Bishop n3 = new Bishop(b, bad, Player.BLACK);
+			Queen n3 = new Queen(b, bad, Player.BLACK);
 			fail("Should throw exception a bad position.");
 		} catch (Exception e) {
 			// It worked
@@ -83,7 +104,7 @@ public class BishopTest {
 		// A bad one (board)
 		b = null;
 		try {
-			Bishop n4 = new Bishop(b, e4, Player.BLACK);
+			Queen n4 = new Queen(b, e4, Player.BLACK);
 			fail("Should throw exception a bad board.");
 		} catch (Exception e) {
 			// It worked
@@ -92,98 +113,123 @@ public class BishopTest {
 
 	@Test
 	public void testGetPossibleMoves() throws Exception {
-		System.out.println("[TESTING: Bishop->GetPossibleMoves()] : Where can the piece can move");
-		Bishop bi;
+		System.out.println("[TESTING: Queen->GetPossibleMoves()] : Where can the piece can move");
+		Queen q;
 		MockBoard b = new MockBoard();
 		Position[] exp;
 		Position[] res;
 		
 		// Empty board
-		bi = new Bishop(b, e4, Player.BLACK);   // Center
+		q = new Queen(b, e4, Player.BLACK);   // Center
 		exp = new Position[] {
 				d5, c6, b7, a8,
 				f5, g6, h7,
 				d3, c2, b1,
-				f3, g2, h1
+				f3, g2, h1,
+				e5, e6,e7,e8,
+				e3, e2, e1,
+				a4, b4,c4,d4,
+				f4, g4, h4
 		};
-		res = bi.getPossibleMoves();
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, a8, Player.BLACK);   // Corner -top left
+		q = new Queen(b, a8, Player.BLACK);   // Corner -top left
 		exp = new Position[] {
 				d5, c6, b7, e4,
-				f3, g2, h1
+				f3, g2, h1,
+				a7,a6,a5,a4,a3,a2,a1,
+				b8,c8,d8,e8,f8,g8,h8
 		};
-		res = bi.getPossibleMoves();
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right
+		q = new Queen(b, h1, Player.BLACK);   // Corner -bottom right
 		exp = new Position[] {
 				d5, c6, b7, a8,
-				f3, g2, e4
+				f3, g2, e4,
+				h2,h3,h4,h5,h6,h7,h8,
+				a1,b1,c1,d1,e1,f1,g1
 		};
-		res = bi.getPossibleMoves();
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, h8, Player.BLACK);   // Corner -top left
+		q = new Queen(b, h8, Player.BLACK);   // Corner -top left
 		exp = new Position[] {
 				g7, f6, e5, d4,
-				c3, b2, a1
+				c3, b2, a1,
+				h1,h2,h3,h4,h5,h6,h7,
+				a8,b8,c8,d8,e8,f8,g8
 		};
-		res = bi.getPossibleMoves();
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, a1, Player.BLACK);   // Corner -bottom left
+		q = new Queen(b, a1, Player.BLACK);   // Corner -bottom left
 		exp = new Position[] {
 				g7, f6, e5, d4,
-				c3, b2, h8
+				c3, b2, h8,
+				a2,a3,a4,a5,a6,a7,a8,
+				b1,c1,d1,e1,f1,g1,h1
 		};
-		res = bi.getPossibleMoves();
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		
 		// Filled board -- same team
-		bi = new Bishop(b, e4, Player.BLACK);
+		q = new Queen(b, e4, Player.BLACK);
 		exp = new Position[] {
 				f5, g6, h7,
 				d3, c2,
-				f3
+				f3,
+				e5, e6,e7,e8,
+				e3, e2, e1,
+				a4, b4,c4,d4
 		};
-		b.setPiece(new Queen(b, d5, Player.BLACK));
+		b.setPiece(new Pawn(b, d5, Player.BLACK));
 		b.setPiece(new Queen(b, g2, Player.BLACK));
-		b.setPiece(new Queen(b, b1, Player.BLACK));
-		res = bi.getPossibleMoves();
+		b.setPiece(new King(b, b1, Player.BLACK));
+		b.setPiece(new Pawn(b, f4, Player.BLACK));
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		b.clean();
 		// Filled board -- Opposite team
-		bi = new Bishop(b, e4, Player.WHITE);
+		q = new Queen(b, e4, Player.WHITE);
 		exp = new Position[] {
 				f5, g6, h7, d5,
-				d3, c2, b1,
-				f3, g2
+				d3, c2, g2, b1,
+				f3, f4,
+				e5, e6,e7,e8,
+				e3, e2, e1,
+				a4, b4,c4,d4
 		};
-		b.setPiece(new Queen(b, d5, Player.BLACK));
+		b.setPiece(new Pawn(b, d5, Player.BLACK));
 		b.setPiece(new Queen(b, g2, Player.BLACK));
-		b.setPiece(new Queen(b, b1, Player.BLACK));
-		res = bi.getPossibleMoves();
+		b.setPiece(new King(b, b1, Player.BLACK));
+		b.setPiece(new Pawn(b, f4, Player.BLACK));
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		b.clean();
 		// Filled board -- Mixed
-		bi = new Bishop(b, e4, Player.WHITE);
+		q = new Queen(b, e4, Player.WHITE);
 		exp = new Position[] {
-				f5, g6, d5,
+				d5,
+				f5, g6,
 				d3, c2, b1,
-				f3
+				f3,
+				e5, e6,e7,e8,
+				e3, e2, e1,
+				a4, b4,c4,d4,
 		};
 		b.setPiece(new Queen(b, d5, Player.BLACK));
 		b.setPiece(new Queen(b, g2, Player.WHITE));
 		b.setPiece(new Queen(b, b1, Player.BLACK));
 		b.setPiece(new Queen(b, h7, Player.WHITE));
-		res = bi.getPossibleMoves();
+		b.setPiece(new Pawn(b, f4, Player.WHITE));
+		res = q.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		b.clean();
 	}
 
 	@Test
 	public void testGetPieceValue() throws Exception {
-		System.out.println("[TESTING: Bishop->GetPieceValue()] : Value of the piece");
-		Bishop n = new Bishop(new MockBoard(), e4, Player.BLACK);
-		assertEquals(3, n.getPieceValue());
+		System.out.println("[TESTING: Queen->GetPieceValue()] : Value of the piece");
+		Queen n = new Queen(new MockBoard(), e4, Player.BLACK);
+		assertEquals(9, n.getPieceValue());
 	}
 
 }
