@@ -11,10 +11,22 @@ public interface Board {
 
 	public Piece getPieceOn(int[] infront);
 
-	void move(Piece p, Position from, Position to);
+	public boolean move(Piece p, Position from, Position to);
 
 	public int[] getDimensions();
 
 	public Piece getPieceOn(Position pos);
+	
+	public void initBoard();
+	
+	public boolean makeMove(Move m, Player p);
+	
+	public int getPuntuation(Player p);
+	
+	public int[] getPuntuation();
+	
+	public boolean isGameOver();
+	
+	public Piece[][] getBoard();
 
 }

@@ -25,8 +25,9 @@ public class BoardImp implements Board{
 	}
 
 	@Override
-	public void move(Piece p, Position from, Position to) {
+	public boolean move(Piece p, Position from, Position to) {
 		// TODO Auto-generated method stub
+		return false;
 		
 	}
 
@@ -38,6 +39,42 @@ public class BoardImp implements Board{
 
 	@Override
 	public Piece getPieceOn(Position pos) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void initBoard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean makeMove(Move m, Player p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getPuntuation(Player p) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int[] getPuntuation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isGameOver() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Piece[][] getBoard() {
 		// TODO Auto-generated method stub
 		return null;
 	}
