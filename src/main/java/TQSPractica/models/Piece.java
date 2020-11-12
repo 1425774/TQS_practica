@@ -60,8 +60,10 @@ public abstract class Piece {
 	}
 	
 	protected void setCurrentPosition(Position pos) {
-		this.board.move(this, this.currentPosition, pos);
+		//this.board.move(this, this.currentPosition, pos);
 		this.currentPosition = pos;
+		// To recalculate possible moves
+		this.setPossibleMoves(null);
 	}
 	
 	protected Board getBoard() {
@@ -105,7 +107,6 @@ public abstract class Piece {
 		for (int i = 0; i < possible_moves.length; i++) {
 			if (pos.equals(possible_moves[i])) {
 				this.setCurrentPosition(pos);
-				this.setPossibleMoves(null);
 				return true;
 			}
 		}

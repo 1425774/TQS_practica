@@ -114,7 +114,7 @@ public class BoardTest {
 		pawn = b.getPieceOn(e2);
 		assertTrue(pawn instanceof Pawn && pawn.getOwner() == Player.WHITE && e2.equals(pawn.getCurrentPosition()));
 		king = b.getPieceOn(e8);
-		assertTrue(king instanceof King && king.getOwner() == Player.BLACK && e8.equals(pawn.getCurrentPosition()));
+		assertTrue(king instanceof King && king.getOwner() == Player.BLACK && e8.equals(king.getCurrentPosition()));
 		null_ = b.getPieceOn(e4);
 		assertTrue(null_ == null);
 		null_ = b.getPieceOn(bad);
@@ -126,7 +126,7 @@ public class BoardTest {
 		pawn = b.getPieceOn(e2.getCoorPosition()[0],e2.getCoorPosition()[1]);
 		assertTrue(pawn instanceof Pawn && pawn.getOwner() == Player.WHITE && e2.equals(pawn.getCurrentPosition()));
 		king = b.getPieceOn(e8.getCoorPosition()[0],e8.getCoorPosition()[1]);
-		assertTrue(king instanceof King && king.getOwner() == Player.BLACK && e8.equals(pawn.getCurrentPosition()));
+		assertTrue(king instanceof King && king.getOwner() == Player.BLACK && e8.equals(king.getCurrentPosition()));
 		null_ = b.getPieceOn(e4.getCoorPosition()[0],e4.getCoorPosition()[1]);
 		assertTrue(null_ == null);
 		rook = b.getPieceOn(0,0);
@@ -146,7 +146,7 @@ public class BoardTest {
 		pawn = b.getPieceOn(e2.getCoorPosition());
 		assertTrue(pawn instanceof Pawn && pawn.getOwner() == Player.WHITE && e2.equals(pawn.getCurrentPosition()));
 		king = b.getPieceOn(e8.getCoorPosition());
-		assertTrue(king instanceof King && king.getOwner() == Player.BLACK && e8.equals(pawn.getCurrentPosition()));
+		assertTrue(king instanceof King && king.getOwner() == Player.BLACK && e8.equals(king.getCurrentPosition()));
 		null_ = b.getPieceOn(e4.getCoorPosition());
 		assertTrue(null_ == null);
 		rook = b.getPieceOn(new int[] {0,0});
@@ -191,9 +191,10 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testInitBoard() {
+	public void testInitBoard() throws Exception {
 		System.out.println("[TESTING: Board->initBoard()] : Prepare for a new game");
 		Board b = new BoardImp();
+		this.init();
 		b.initBoard();
 		Piece[][] res = b.getBoard();
 		
@@ -236,6 +237,17 @@ public class BoardTest {
 		// Good ones
 		assertTrue(b.makeMove(new MockMove("Nc3"), Player.WHITE));
 		assertTrue(b.makeMove(new MockMove("Nc6"), Player.BLACK));
+		
+		// Bad one -- ambigous
+		b = new BoardImp();
+		b.initBoard();
+		// set up
+		assertTrue(b.makeMove(new MockMove("e3"), Player.WHITE));
+		assertTrue(b.makeMove(new MockMove("Ne2"), Player.WHITE));
+		assertFalse(b.makeMove(new MockMove("Nc3"), Player.WHITE));
+		// Good one -- ambigous
+		assertTrue(b.makeMove(new MockMove("bNc3"), Player.WHITE));
+		
 	}
 
 	@Test
