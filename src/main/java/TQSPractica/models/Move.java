@@ -1,5 +1,7 @@
 package TQSPractica.models;
 
+import TQSPractica.Player;
+
 public interface Move {
 	
 	int UNSET_COLUMN = -1;
