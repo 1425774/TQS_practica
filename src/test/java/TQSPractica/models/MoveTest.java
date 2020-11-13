@@ -13,77 +13,77 @@ public class MoveTest {
 		
 		// Good ones -- Simple
 		m = new MoveImp("e2");
-		assertTrue(m.getClass() == Pawn.class);
+		assertTrue(m.getPieceType() == Pawn.class);
 		m = new MoveImp("Ke1");
-		assertTrue(m.getClass() == King.class);
+		assertTrue(m.getPieceType() == King.class);
 		m = new MoveImp("Rh2");
-		assertTrue(m.getClass() == Rook.class);
+		assertTrue(m.getPieceType() == Rook.class);
 		m = new MoveImp("Qd3");
-		assertTrue(m.getClass() == Queen.class);
+		assertTrue(m.getPieceType() == Queen.class);
 		m = new MoveImp("Nh7");
-		assertTrue(m.getClass() == Knight.class);
+		assertTrue(m.getPieceType() == Knight.class);
 		m = new MoveImp("Ba1");
-		assertTrue(m.getClass() == Bishop.class);
+		assertTrue(m.getPieceType() == Bishop.class);
 		
-		// Accepting non capital letters
+		// Don't accept non capital letters
 		m = new MoveImp("ke1");
-		assertTrue(m.getClass() == King.class);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("rh2");
-		assertTrue(m.getClass() == Rook.class);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("qd3");
-		assertTrue(m.getClass() == Queen.class);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("nh7");
-		assertTrue(m.getClass() == Knight.class);
-		m = new MoveImp("ba1");
-		assertTrue(m.getClass() == Bishop.class);
+		assertTrue(m.getPieceType() == null);
+		m = new MoveImp("ba1");					// This is way dont accept capital letters B bishop and b column get mixed
+		assertTrue(m.getPieceType() == Pawn.class);
 		
 		// Good ones -- Ambiguous
 		m = new MoveImp("ce2");
-		assertTrue(m.getClass() == Pawn.class);
+		assertTrue(m.getPieceType() == Pawn.class);
 		m = new MoveImp("Rbh2");
-		assertTrue(m.getClass() == Rook.class);
+		assertTrue(m.getPieceType() == Rook.class);
 		m = new MoveImp("Qed3");
-		assertTrue(m.getClass() == Queen.class);
+		assertTrue(m.getPieceType() == Queen.class);
 		m = new MoveImp("Ngh7");
-		assertTrue(m.getClass() == Knight.class);
+		assertTrue(m.getPieceType() == Knight.class);
 		
 		// Bad ones -- bad piece
 		m = new MoveImp("Ph7");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("Wh7");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		
 		// Bad ones -- bad destination
 		m = new MoveImp("7");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("a");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("aa");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("Ba");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("h9");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("a9");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("h0");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("Na0");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("Qi8");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		m = new MoveImp("i1");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 		
 		// Bad ones -- ambiguous (king cannot be)
 		m = new MoveImp("Kgh8");
-		assertTrue(m.getClass() == null);
+		assertTrue(m.getPieceType() == null);
 	}
 
 	@Test
 	public void testGetColumn() {
 		// only for ambiguous
-		// Non ambiguous err colum not set
+		// Non ambiguous err column not set
 		Move m;
 		m = new MoveImp("e2");
 		assertTrue(m.getColumn() == Move.UNSET_COLUMN);
@@ -198,8 +198,6 @@ public class MoveTest {
 		assertTrue(m.valid());
 		m = new MoveImp("Qd3");
 		assertTrue(m.valid());
-		m = new MoveImp("nh7");	// -- Lower case
-		assertTrue(m.valid());
 		m = new MoveImp("ce2");	// -- Ambiguous
 		assertTrue(m.valid());
 		m = new MoveImp("Rbf2");
@@ -223,6 +221,8 @@ public class MoveTest {
 		m = new MoveImp("Noh7");
 		assertFalse(m.valid());
 		m = new MoveImp("Kgh8"); // -- king special case
+		assertFalse(m.valid());
+		m = new MoveImp("nh7");	// -- Lower case
 		assertFalse(m.valid());
 
 	}
