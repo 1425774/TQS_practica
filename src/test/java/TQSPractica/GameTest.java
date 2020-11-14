@@ -7,7 +7,7 @@ import org.junit.Test;
 public class GameTest {
 
 	@Test
-	public void testGame() {
+	public void testGame() throws Exception {
 		System.out.println("[TESTING: Game() :: Constructor]");
 		
 		MockDisplay d = new MockDisplay();
@@ -27,7 +27,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void testMenuState() {
+	public void testMenuState() throws Exception {
 		System.out.println("[TESTING: menuState() :: Display menu]");
 		
 		MockDisplay d = new MockDisplay();
@@ -41,44 +41,45 @@ public class GameTest {
 	}
 
 	@Test
-	public void testSetupState() {
-		System.out.println("[TESTING: setupState() :: Setup the board]");
-		
-		// only will return true unless something really messy happens
-		// as the initialization is done by "hand"
-		Game g = new Game(new MockDisplay());
-		assertTrue(g.setupState());
-
-	}
-
-	@Test
-	public void testWhiteState() {
+	public void testWhiteState() throws Exception {
 		System.out.println("[TESTING: whiteState() :: White has to make a play]");
 		
-		// true made a move -- false surrendered
 		MockDisplay d = new MockDisplay();
 		Game g = new Game(d);
 		
-		assertTrue(g.whiteState());
+		
+		// good move
+		assertTrue(g.whiteState() == Game.LEGAL);
+		// bad move
+		d.badMove();
+		assertTrue(g.whiteState() == Game.ILLEGAL);
+		// surrender
 		d.whiteSurrender();
-		assertFalse(g.whiteState());
+		assertTrue(g.whiteState() == Game.SURRENDER);
+		
 	}
 
 	@Test
-	public void testBlackState() {
+	public void testBlackState() throws Exception {
 		System.out.println("[TESTING: balckState() :: Black has to make a play]");
 		
-		// true made a move -- false surrendered
+
 		MockDisplay d = new MockDisplay();
 		Game g = new Game(d);
 		
-		assertTrue(g.blackState());
+		
+		// good move
+		assertTrue(g.blackState() == Game.LEGAL);
+		// bad move
+		d.badMove();
+		assertTrue(g.blackState() == Game.ILLEGAL);
+		// surrender
 		d.blackSurrender();
-		assertFalse(g.blackState());
+		assertTrue(g.blackState() == Game.SURRENDER);
 	}
 	
 	@Test
-	public void testResState() {
+	public void testResState() throws Exception {
 		System.out.println("[TESTING: resState() :: Shows result]");
 		
 		// returns the player that won, if either won return null

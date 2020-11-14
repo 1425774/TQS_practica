@@ -1,52 +1,87 @@
 package TQSPractica;
 
+import TQSPractica.models.Board;
+import TQSPractica.models.BoardImp;
+import TQSPractica.models.Move;
 import TQSPractica.views.Display;
 
 public class Game {
-	
-	public static enum State {
-		MENU, SETUP_GAME, WHITE_PLAY, BLACK_PLAY, DISPLAY_RES, EXIT
-	}
+
+	public static final int SURRENDER = -1;
+	public static final int LEGAL = 0;
+	public static final int ILLEGAL = 1;
 	
 	private Display display;
+	private Board board;
+	
+	private boolean white_surrender = false;
+	private boolean black_surrender = false;
 	
 	
-	public Game(Display dis) {
+	public Game(Display dis) throws Exception {
+		if (dis == null) 
+			throw new Exception("No display found");
+		
 		this.display = dis;
+		this.board = new BoardImp();
+		this.board.initBoard();
 	}
 	
 	public boolean menuState() {
-		return false;
+		return this.display.showMenu() == Display.Menu.OK;		
+	}
+	
+	private int getMoveFromPlayer(Player p) {
 		
-	}
-	
-	public boolean setupState() {
-		return false;
+		// Display assures move is valid or null
+		Move m = this.display.getMove(p);
 		
+		// null surrender
+		if (m == null) {
+			
+			this.white_surrender = (p == Player.WHITE);
+			this.black_surrender = (p == Player.BLACK);
+			
+			return SURRENDER;
+		}
+			
+		
+		// make move -- return if it can be made or not
+		if (this.board.makeMove(m, p)) {
+			return LEGAL;
+		}
+		return ILLEGAL;
 	}
 	
-	public boolean whiteState() {
-		return false;
+	
+	public int whiteState() {
+		return this.getMoveFromPlayer(Player.WHITE);
 	}
 	
-	public boolean blackState() {
-		return false;
+	public int blackState() {
+		return this.getMoveFromPlayer(Player.BLACK);
 	}
 	
 	public Player resState() {
-		return null;
-	}
-	
-	public void exitState() {
-
+		
+		if (black_surrender)
+			return Player.WHITE;
+		
+		if (white_surrender)
+			return Player.BLACK;
+		
+		if (!this.board.isGameOver())
+			return null;
+		
+		return this.board.getPuntuation(Player.WHITE) == Integer.MAX_VALUE ? Player.WHITE : Player.BLACK;
+			
 	}
 
 	public static void main(String[] args) {
 	}
 
-	public Object getDisplay() {
-		// TODO Auto-generated method stub
-		return null;
+	public Display getDisplay() {
+		return this.display;
 	}
 	
 	
