@@ -17,7 +17,7 @@ public class TerminalDisplay implements Display {
 	
 	private Scanner stdin;
 	
-	private static final String ROW_SEPARATOR = "+ - + - + - + - + - + - + - + - +";
+	private static final String ROW_SEPARATOR = "  + - + - + - + - + - + - + - + - +";
 
 	public TerminalDisplay(Scanner s) throws Exception {
 
@@ -43,6 +43,7 @@ public class TerminalDisplay implements Display {
 		if (in.equals("X")) m = null;
 		while(m != null && !m.valid()) {
 			System.out.println("This move doesn't make any sense, please try again.");
+			System.out.print("\t>["+player+"] next move:");
 			in = this.stdin.nextLine();
 			m = new MoveImp(in);
 			if (in.equals("X")) m = null;
@@ -80,7 +81,7 @@ public class TerminalDisplay implements Display {
 		
 		String winner = p == Player.WHITE? "WHITE" : "BLACK";
 		
-		System.out.print("Congratulations on you victory "+winner+"!");
+		System.out.println("Congratulations on you victory "+winner+"!");
 	}
 	
 	private char piece2identifier(Piece p) {
@@ -118,14 +119,15 @@ public class TerminalDisplay implements Display {
 		if (board.length != 8 || board[0].length != 8) {
 			throw new Exception("Board must be 8x8");
 		}
+		char[] rows = {'8','7','6','5','4','3','2','1'};
 		
 		// Clean a bit the screen
 		for (int i = 0; i < 10; i++)
 			System.out.println();
-		
+		System.out.println("    a   b   c   d   e   f   g   h ");
 		System.out.println(ROW_SEPARATOR);
 		for (int i = 0; i < board.length; i++) {
-			System.out.print("|");
+			System.out.print(rows[i]+" |");
 			for (int j = 0; j < board[0].length; j++) {
 				System.out.print(" "+this.piece2identifier(board[i][j])+" |");
 			}

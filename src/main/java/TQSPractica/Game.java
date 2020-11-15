@@ -1,9 +1,12 @@
 package TQSPractica;
 
+import java.util.Scanner;
+
 import TQSPractica.models.Board;
 import TQSPractica.models.BoardImp;
 import TQSPractica.models.Move;
 import TQSPractica.views.Display;
+import TQSPractica.views.TerminalDisplay;
 
 public class Game {
 
@@ -88,16 +91,17 @@ public class Game {
 	
 	public Player resState() {
 		
+		Player winner;
 		if (black_surrender)
-			return Player.WHITE;
+			winner = Player.WHITE;
 		
-		if (white_surrender)
-			return Player.BLACK;
+		else if (white_surrender)
+			winner = Player.BLACK;
 		
-		if (!this.board.isGameOver())
+		else if (!this.board.isGameOver())
 			return null;
-		
-		Player winner = this.board.getPuntuation(Player.WHITE) == Integer.MAX_VALUE ? Player.WHITE : Player.BLACK;
+		else
+			winner = this.board.getPuntuation(Player.WHITE) == Integer.MAX_VALUE ? Player.WHITE : Player.BLACK;
 		try {
 			this.display.showWinner(winner);
 		} catch (Exception e) {
@@ -107,7 +111,41 @@ public class Game {
 		return winner;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		
+		Display display = new TerminalDisplay(new Scanner(System.in));		
+		boolean exit = false;
+		
+		while (!exit) {
+			// Create a new game
+			Game controller = new Game(display);
+			
+			// Show menu
+			exit = !controller.menuState();
+			
+			if(exit) continue;
+			
+			// Start Game
+			while (controller.resState() == null) {
+				// White turn
+				int valid = controller.whiteState();
+				if (valid == SURRENDER) continue;
+				while(valid != LEGAL) {
+					System.out.println("\tThis move can't be placed or it is ambigous. Try again");
+					valid = controller.whiteState();
+				}
+				
+				// Black turn
+				valid = controller.blackState();
+				if (valid == SURRENDER) continue;
+				while(valid != LEGAL) {
+					System.out.println("\tThis move can't be placed or it is ambigous. Try again");
+					valid = controller.blackState();
+				}
+			}
+			
+		}
+		
 	}
 
 	public Display getDisplay() {
