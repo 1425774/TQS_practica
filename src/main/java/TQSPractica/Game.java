@@ -17,6 +17,8 @@ public class Game {
 	private boolean white_surrender = false;
 	private boolean black_surrender = false;
 	
+	private boolean first_move = true;
+	
 	
 	public Game(Display dis) throws Exception {
 		if (dis == null) 
@@ -48,13 +50,19 @@ public class Game {
 		
 		// make move -- return if it can be made or not
 		if (this.board.makeMove(m, p)) {
+			this.display.showBoard(this.board.getBoard());
 			return LEGAL;
 		}
-		return ILLEGAL;
+		return ILLEGAL; // valid move but with the actual board it is not possible to do
 	}
 	
 	
 	public int whiteState() {
+		if (this.first_move) {
+			this.display.showBoard(this.board.getBoard());
+			this.first_move = false;
+		}
+			
 		return this.getMoveFromPlayer(Player.WHITE);
 	}
 	
@@ -73,11 +81,14 @@ public class Game {
 		if (!this.board.isGameOver())
 			return null;
 		
-		return this.board.getPuntuation(Player.WHITE) == Integer.MAX_VALUE ? Player.WHITE : Player.BLACK;
-			
+		Player winner = this.board.getPuntuation(Player.WHITE) == Integer.MAX_VALUE ? Player.WHITE : Player.BLACK;
+		this.display.showWinner(winner);
+		return winner;
 	}
 
 	public static void main(String[] args) {
+		String currentDirectory = System.getProperty("user.dir");
+		System.out.println("The current working directory is " + currentDirectory);
 	}
 
 	public Display getDisplay() {

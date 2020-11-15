@@ -2,6 +2,7 @@ package TQSPractica;
 
 import TQSPractica.models.Move;
 import TQSPractica.models.MoveImp;
+import TQSPractica.models.Piece;
 import TQSPractica.views.Display;
 
 public class MockDisplay implements Display {
@@ -75,6 +76,18 @@ public class MockDisplay implements Display {
 	@Override
 	public Move getMove(Player p) {
 		return p == Player.WHITE ? this.m_white : this.m_balck;
+	}
+
+	@Override
+	public void showWinner(Player p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showBoard(Piece[][] board) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

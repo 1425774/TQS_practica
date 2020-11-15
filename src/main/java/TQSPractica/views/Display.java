@@ -2,6 +2,7 @@ package TQSPractica.views;
 
 import TQSPractica.Player;
 import TQSPractica.models.Move;
+import TQSPractica.models.Piece;
 
 public interface Display {
 
@@ -10,8 +11,12 @@ public interface Display {
 		EXIT
 	}
 
-	Object showMenu();
+	Menu showMenu();
+	
+	void showWinner(Player p);
+	
+	void showBoard(Piece[][] board);
 
-	Move getMove(Player white);
+	Move getMove(Player p);
 
 }
