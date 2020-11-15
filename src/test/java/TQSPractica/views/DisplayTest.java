@@ -9,18 +9,42 @@ import java.util.Scanner;
 import org.junit.Test;
 
 import TQSPractica.Player;
+import TQSPractica.models.Bishop;
+import TQSPractica.models.King;
+import TQSPractica.models.Knight;
 import TQSPractica.models.MockBoard;
 import TQSPractica.models.Move;
 import TQSPractica.models.Pawn;
 import TQSPractica.models.Piece;
 import TQSPractica.models.Position;
 import TQSPractica.models.Queen;
+import TQSPractica.models.Rook;
 import TQSPractica.views.Display.Menu;
 
 public class DisplayTest {
+	
+	@Test
+	public void testDisplay() throws Exception {
+		
+		File f = new File("inputtest/menuok.txt");
+		Scanner s = new Scanner(f);
+		Display d;
+		
+		// Bad constructor
+		try {
+			d = new TerminalDisplay(null);
+			fail("Should raise exception");
+		} catch (Exception e) {
+			// Success
+		}
+		
+		// Normal
+		d = new TerminalDisplay(s);
+		
+	}
 
 	@Test
-	public void testShowMenu() throws FileNotFoundException {
+	public void testShowMenu() throws Exception {
 		File f = new File("inputtest/menuok.txt");
 		Scanner s = new Scanner(f);
 		Display d = new TerminalDisplay(s);
@@ -42,7 +66,7 @@ public class DisplayTest {
 	}
 
 	@Test
-	public void testShowWinner() throws FileNotFoundException {
+	public void testShowWinner() throws Exception {
 		File f = new File("inputtest/whatever3.txt");
 		Scanner s = new Scanner(f);
 		Display d = new TerminalDisplay(s);
@@ -126,14 +150,18 @@ public class DisplayTest {
 		
 		// Full
 		Piece p = new Pawn(new MockBoard(), new Position("e2"), Player.BLACK);
-		Piece q = new Queen(new MockBoard(), new Position("e2"), Player.BLACK);
+		Piece q = new Queen(new MockBoard(), new Position("e2"), Player.WHITE);
+		Piece k = new King(new MockBoard(), new Position("e2"), Player.WHITE);
+		Piece b = new Bishop(new MockBoard(), new Position("e2"), Player.WHITE);
+		Piece n = new Knight(new MockBoard(), new Position("e2"), Player.WHITE);
+		Piece r = new Rook(new MockBoard(), new Position("e2"), Player.WHITE);
 		board = new Piece[][] {
+			{p,k,p,p,p,p,p,r},
 			{p,p,p,p,p,p,p,p},
 			{p,p,p,p,p,p,p,p},
-			{p,p,p,p,p,p,p,p},
-			{p,p,p,p,p,p,p,p},
+			{p,n,p,p,p,p,p,p},
 			{q,q,q,q,q,q,q,q},
-			{q,q,q,q,q,q,q,q},
+			{q,q,q,q,q,b,q,q},
 			{q,q,q,q,q,q,q,q},
 			{q,q,q,q,q,q,q,q}
 		};
@@ -142,7 +170,7 @@ public class DisplayTest {
 	}
 
 	@Test
-	public void testGetMove() throws FileNotFoundException {
+	public void testGetMove() throws Exception {
 		File f = new File("inputtest/movegood.txt");
 		Scanner s = new Scanner(f);
 		Display d = new TerminalDisplay(s);
@@ -152,7 +180,7 @@ public class DisplayTest {
 			d.getMove(null);
 			fail("Should raise exception");
 		} catch (Exception e) {
-			// Succes
+			// Success
 		}
 		
 		// Good player -- valid move
@@ -172,6 +200,14 @@ public class DisplayTest {
 		d = new TerminalDisplay(s);
 		m = d.getMove(Player.BLACK);
 		assertTrue(m == null);
+		
+		// Good player -- non valid move at first // it should loop if it is not good till gets a surrender
+		f = new File("inputtest/movebadthensurrender.txt");
+		s = new Scanner(f);
+		d = new TerminalDisplay(s);
+		m = d.getMove(Player.BLACK);
+		assertTrue(m == null);
+		
 		
 	}
 

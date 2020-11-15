@@ -36,7 +36,13 @@ public class Game {
 	private int getMoveFromPlayer(Player p) {
 		
 		// Display assures move is valid or null
-		Move m = this.display.getMove(p);
+		Move m = null;
+		try {
+			m = this.display.getMove(p);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// null surrender
 		if (m == null) {
@@ -50,7 +56,12 @@ public class Game {
 		
 		// make move -- return if it can be made or not
 		if (this.board.makeMove(m, p)) {
-			this.display.showBoard(this.board.getBoard());
+			try {
+				this.display.showBoard(this.board.getBoard());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return LEGAL;
 		}
 		return ILLEGAL; // valid move but with the actual board it is not possible to do
@@ -59,7 +70,12 @@ public class Game {
 	
 	public int whiteState() {
 		if (this.first_move) {
-			this.display.showBoard(this.board.getBoard());
+			try {
+				this.display.showBoard(this.board.getBoard());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.first_move = false;
 		}
 			
@@ -82,13 +98,16 @@ public class Game {
 			return null;
 		
 		Player winner = this.board.getPuntuation(Player.WHITE) == Integer.MAX_VALUE ? Player.WHITE : Player.BLACK;
-		this.display.showWinner(winner);
+		try {
+			this.display.showWinner(winner);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return winner;
 	}
 
 	public static void main(String[] args) {
-		String currentDirectory = System.getProperty("user.dir");
-		System.out.println("The current working directory is " + currentDirectory);
 	}
 
 	public Display getDisplay() {

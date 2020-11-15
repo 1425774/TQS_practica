@@ -13,10 +13,10 @@ public interface Display {
 
 	Menu showMenu();
 	
-	void showWinner(Player p);
+	void showWinner(Player p) throws Exception;
 	
-	void showBoard(Piece[][] board);
+	void showBoard(Piece[][] board) throws Exception;
 
-	Move getMove(Player p);
+	Move getMove(Player p) throws Exception;
 
 }
