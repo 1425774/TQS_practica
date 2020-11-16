@@ -140,11 +140,12 @@ public class BishopTest {
 		// Filled board -- same team // Path 1
 		bi = new Bishop(b, e4, Player.BLACK);
 		exp = new Position[] {
+				d5, d3, f5, f3
 		};
-		b.setPiece(new Queen(b, d5, Player.BLACK));
-		b.setPiece(new Queen(b, d3, Player.BLACK));
-		b.setPiece(new Queen(b, f5, Player.BLACK));
-		b.setPiece(new Queen(b, f3, Player.BLACK));
+		b.setPiece(new Queen(b, c6, Player.BLACK));
+		b.setPiece(new Queen(b, c2, Player.BLACK));
+		b.setPiece(new Queen(b, g6, Player.BLACK));
+		b.setPiece(new Queen(b, g2, Player.BLACK));
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		b.clean();
