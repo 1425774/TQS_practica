@@ -66,6 +66,7 @@ public class PawnTest {
 		Position e2 = new Position("e2");
 		Position e3 = new Position("e3");
 		Position e4 = new Position("e4");
+		Position e5 = new Position("e5");
 		Position e6 = new Position("e6");
 		Position d6 = new Position("d6");
 		Position d5 = new Position("d5");
@@ -233,7 +234,17 @@ public class PawnTest {
 		assertFalse(pawn.moveTo(f5));
 		pawn = new Pawn(board, e4, Player.WHITE);
 		assertFalse(pawn.moveTo(e3));
-		assertFalse(pawn.moveTo(null));	
+		assertFalse(pawn.moveTo(null));
+		
+		// Extra test for the bug found in commit #1f30371a994aab42b85aced0ca962b105b70688b
+		pawn = new Pawn(board, e4, Player.WHITE);
+		Pawn pawn3 = new Pawn(board, e5, Player.BLACK);
+		board.setPiece(pawn3);
+		board.setPiece(pawn);
+		board.setPiece(new Pawn(board,d4, Player.WHITE));
+		assertFalse(pawn.moveTo(e5));
+		assertTrue(pawn3.moveTo(d4));
+		assertTrue(pawn.moveTo(e5));
 	}
 
 	@Test
