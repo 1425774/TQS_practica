@@ -11,7 +11,7 @@ public interface Board {
 
 	public Piece getPieceOn(int[] infront);
 
-	public boolean move(Piece p, Position from, Position to);
+	public boolean move(Piece p, Position from, Position to) throws Exception;
 
 	public int[] getDimensions();
 
@@ -19,7 +19,7 @@ public interface Board {
 	
 	public void initBoard() throws Exception;
 	
-	public boolean makeMove(Move m, Player p);
+	public boolean makeMove(Move m, Player p) throws Exception;
 	
 	public int getPuntuation(Player p);
 	

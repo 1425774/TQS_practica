@@ -30,7 +30,30 @@ public class BoardImp extends Observable implements Board{
 		return match;
 	}
 	
-	private void promote() {
+	private void promote() throws Exception {
+		
+		// Check both top and bottom rows for pawns and exchange them for Queens
+		// Also delete them from the piece lists
+		
+		Piece[][] rows2look = {
+				this.board[0],
+				this.board[7]
+		};
+		
+		for (int i = 0; i < rows2look.length; i++) {
+			for (int j = 0; j < rows2look[0].length; j++) {
+				Piece candidate = rows2look[i][j];
+				if(candidate instanceof Pawn) {
+					Queen replacement = new Queen(this, candidate.getCurrentPosition(), candidate.getOwner());
+					// Change from list
+					this.pieces_player.get(candidate.getOwner()).remove(candidate);
+					this.pieces_player.get(candidate.getOwner()).add(replacement);
+					// Change from board
+					this.board[i*7][j] = replacement;
+				}
+				
+			}
+		}
 		
 	}
 	
@@ -62,7 +85,7 @@ public class BoardImp extends Observable implements Board{
 	}
 
 	@Override
-	public boolean move(Piece p, Position from, Position to) {
+	public boolean move(Piece p, Position from, Position to) throws Exception {
 		
 		if (p == null || from == null || to == null || !from.equals(p.getCurrentPosition())) {
 			return false;
@@ -89,6 +112,7 @@ public class BoardImp extends Observable implements Board{
 			p.setCurrentPosition(to);
 			this.setChanged();
 			this.notifyObservers(this);
+			this.promote();
 			return true;
 		}
 		
@@ -184,7 +208,7 @@ public class BoardImp extends Observable implements Board{
 	}
 
 	@Override
-	public boolean makeMove(Move m, Player p) {
+	public boolean makeMove(Move m, Player p) throws Exception {
 		
 		if (m == null || p == null || !m.valid()) {
 			return false;

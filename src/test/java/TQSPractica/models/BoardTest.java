@@ -386,7 +386,9 @@ public class BoardTest {
 		assertTrue(b.getPices(Player.WHITE).size() == 16 && b.getPieceOn(new Position("g8")) instanceof Queen);
 		
 		// Black
-		p = b.getPieceOn(new Position("e6"));
+		b = new BoardImp();
+		b.initBoard();
+		p = b.getPieceOn(new Position("e7"));
 		b.move(p, p.getCurrentPosition(), new Position("e5"));
 		b.move(p, p.getCurrentPosition(), new Position("e4"));
 		b.move(p, p.getCurrentPosition(), new Position("e3"));
