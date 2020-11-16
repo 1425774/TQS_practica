@@ -17,14 +17,16 @@ public class Bishop extends Piece {
 	@Override
 	protected void generatePossibleMoves() {
 		List<Position> possible_moves = new ArrayList<>();
-		
-		boolean stop = false;		// Stop condition for main loop
-		boolean topl = true;		// Stop conditions for directions
-		boolean topr = true;
-		boolean botl = true;
-		boolean botr = true;
-		
 		int i = 1;
+		
+		
+		boolean topl = this.lookOnDirection(i, +1, +1, possible_moves);		// Stop conditions for directions
+		boolean topr = this.lookOnDirection(i, -1, +1, possible_moves);
+		boolean botl = this.lookOnDirection(i, +1, -1, possible_moves);
+		boolean botr = this.lookOnDirection(i, -1, -1, possible_moves);
+		boolean stop = !(topl || topr || botr || botl);						// Stop condition for main loop
+		
+		++i;
 		while (!stop) {
 			
 			if (botr)

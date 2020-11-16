@@ -175,6 +175,74 @@ public class BishopTest {
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		b.clean();
+		
+		// Loop testing
+		// 0 loops
+		bi = new Bishop(b, e4, Player.BLACK);
+		exp = new Position[] {
+		};
+		b.setPiece(new Queen(b, d5, Player.BLACK));
+		b.setPiece(new Queen(b, d3, Player.BLACK));
+		b.setPiece(new Queen(b, f5, Player.BLACK));
+		b.setPiece(new Queen(b, f3, Player.BLACK));
+		res = bi.getPossibleMoves();
+		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
+		// 1 loop
+		res = bi.getPossibleMoves();
+		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right 
+		b.setPiece(new Queen(b, e4, Player.BLACK));
+		exp = new Position[] {
+				f3, g2
+		};
+		res = bi.getPossibleMoves();
+		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
+		// 2 loops
+		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right
+		b.setPiece(new Queen(b, d5, Player.BLACK));
+		exp = new Position[] {
+				f3, g2, e4
+		};
+		res = bi.getPossibleMoves();
+		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
+		// 3 loops
+		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right
+		b.setPiece(new Queen(b, c6, Player.BLACK));
+		exp = new Position[] {
+				f3, g2, e4, d5
+		};
+		res = bi.getPossibleMoves();
+		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
+		// 4 loops
+		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right
+		b.setPiece(new Queen(b, b7, Player.BLACK));
+		exp = new Position[] {
+				f3, g2, e4, d5, c6
+		};
+		res = bi.getPossibleMoves();
+		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
+		// 5 loops
+		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right
+		b.setPiece(new Queen(b, a8, Player.BLACK));
+		exp = new Position[] {
+				f3, g2, e4, d5, c6, b7
+		};
+		res = bi.getPossibleMoves();
+		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
+		// Max possible loops
+		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right
+		exp = new Position[] {
+				f3, g2, e4, d5, c6, b7, a8
+		};
+		res = bi.getPossibleMoves();
+		assertTrue(PawnTest.comaprePositionsArray(exp, res));
+		b.clean();
+		
 	}
 
 	@Test
