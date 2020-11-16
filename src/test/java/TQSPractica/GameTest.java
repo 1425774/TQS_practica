@@ -119,6 +119,10 @@ public class GameTest {
 	
 	@Test
 	public void testMain() throws Exception {
+		
+		// If not exceptions are thrown or it doesnt end in an
+		// infinite loop it is working
+		
 		// Path test
 		Scanner s;
 		File f;

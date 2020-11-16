@@ -13,7 +13,7 @@ public class Game {
 	public static final int SURRENDER = -1;
 	public static final int LEGAL = 0;
 	public static final int ILLEGAL = 1;
-	public static Scanner scanner;
+	public static Scanner scanner = new Scanner(System.in);
 	
 	private Display display;
 	private Board board;
@@ -96,7 +96,7 @@ public class Game {
 
 	public static void main(String[] args) throws Exception {
 		
-		Display display = new TerminalDisplay(new Scanner(System.in));		
+		Display display = new TerminalDisplay(Game.scanner);		
 		boolean exit = false;
 		
 		while (!exit) {
