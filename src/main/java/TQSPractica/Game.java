@@ -13,6 +13,7 @@ public class Game {
 	public static final int SURRENDER = -1;
 	public static final int LEGAL = 0;
 	public static final int ILLEGAL = 1;
+	public static Scanner scanner;
 	
 	private Display display;
 	private Board board;
@@ -107,18 +108,20 @@ public class Game {
 			exit = !controller.menuState();
 			
 			if(exit) continue;
-			
 			// Start Game
-			while (controller.resState() == null) {
-				
+			do {
 				int valid = white_turn ? controller.whiteState() : controller.blackState();
+				
 				if (valid == SURRENDER) continue;
+				
 				while(valid != LEGAL) {
+					
 					System.out.println("\tThis move can't be placed or it is ambigous. Try again");
+					
 					valid = white_turn ? controller.whiteState() : controller.blackState();
 				}
 				white_turn = !white_turn;
-			}
+			} while (controller.resState() == null);
 		}
 	}
 

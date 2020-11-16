@@ -2,6 +2,10 @@ package TQSPractica;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import org.junit.Test;
 
 public class GameTest {
@@ -110,6 +114,33 @@ public class GameTest {
 		g = new Game(d);
 		d.blackwins(g);
 		assertTrue(g.resState() == Player.BLACK);
+		
+	}
+	
+	@Test
+	public void testMain() throws Exception {
+		// Path test
+		Scanner s;
+		File f;
+		
+		// Path 1
+		f = new File("inputtest/path1");
+		s = new Scanner(f);
+		Game.scanner = s;
+		Game.main(new String[]{});
+		
+		// Path 2
+		f = new File("inputtest/path3");
+		s = new Scanner(f);
+		Game.scanner = s;
+		Game.main(new String[]{});
+		
+		// Path 3
+		f = new File("inputtest/path3");
+		s = new Scanner(f);
+		Game.scanner = s;
+		Game.main(new String[]{});
+		
 		
 	}
 
