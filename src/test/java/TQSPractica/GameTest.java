@@ -145,7 +145,6 @@ public class GameTest {
 		Game.scanner = s;
 		Game.main(new String[]{});
 		
-		
 	}
 
 }
