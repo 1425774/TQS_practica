@@ -30,6 +30,10 @@ public class BoardImp extends Observable implements Board{
 		return match;
 	}
 	
+	private void promote() {
+		
+	}
+	
 	public BoardImp() {
 		this.board = null;
 		this.dim = null;

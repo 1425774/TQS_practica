@@ -369,5 +369,32 @@ public class BoardTest {
 		b.move(q, q.getCurrentPosition(), new Position("e8"));
 		assertTrue(b.isGameOver());
 	}
+	
+	@Test
+	public void testPromote() throws Exception {
+		System.out.println("[TESTING: Board->promote()] : any pawn got to the other side? shall I change it for a queen?");
+		Board b = new BoardImp();
+		b.initBoard();
+		
+		// White
+		Piece p = b.getPieceOn(new Position("e2"));
+		b.move(p, p.getCurrentPosition(), new Position("e4"));
+		b.move(p, p.getCurrentPosition(), new Position("e5"));
+		b.move(p, p.getCurrentPosition(), new Position("e6"));
+		b.move(p, p.getCurrentPosition(), new Position("f7"));
+		b.move(p, p.getCurrentPosition(), new Position("g8"));
+		assertTrue(b.getPices(Player.WHITE).size() == 16 && b.getPieceOn(new Position("g8")) instanceof Queen);
+		
+		// Black
+		p = b.getPieceOn(new Position("e6"));
+		b.move(p, p.getCurrentPosition(), new Position("e5"));
+		b.move(p, p.getCurrentPosition(), new Position("e4"));
+		b.move(p, p.getCurrentPosition(), new Position("e3"));
+		b.move(p, p.getCurrentPosition(), new Position("f2"));
+		b.move(p, p.getCurrentPosition(), new Position("g1"));
+		assertTrue(b.getPices(Player.BLACK).size() == 16 && b.getPieceOn(new Position("g1")) instanceof Queen);
+		
+		
+	}
 
 }
