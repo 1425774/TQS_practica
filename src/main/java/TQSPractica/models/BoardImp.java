@@ -3,10 +3,12 @@ package TQSPractica.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
 
 import TQSPractica.Player;
 
-public class BoardImp implements Board{
+@SuppressWarnings("deprecation")
+public class BoardImp extends Observable implements Board{
 
 	private int[] dim;
 	private Piece[][] board;
@@ -14,10 +16,6 @@ public class BoardImp implements Board{
 	private HashMap<Player, List<Piece>> pieces_player;
 
 	private boolean isPossibleMove(Position pos, Piece p) {
-		
-		if (p == null || pos == null || pos.getTileId() == Position.ERR_NON_EXISTENT_TILE) {
-			return false;
-		}
 		
 		Position[] possible_moves = p.getPossibleMoves();
 		int i = 0;
@@ -85,6 +83,8 @@ public class BoardImp implements Board{
 			this.board[prev_coor[1]][prev_coor[0]] = null;
 			this.board[new_coor[1]][new_coor[0]] = p;
 			p.setCurrentPosition(to);
+			this.setChanged();
+			this.notifyObservers(this);
 			return true;
 		}
 		
@@ -106,80 +106,76 @@ public class BoardImp implements Board{
 	}
 
 	@Override
-	public void initBoard() {
+	public void initBoard() throws Exception {
 		Board b = this;
 		this.dim = new int[] {8,8};
 		this.pieces_player = new HashMap<>();
-		try {
-			Pawn aw = new Pawn(b, new Position("a2"),Player.WHITE);
-			Pawn bw = new Pawn(b, new Position("b2"),Player.WHITE);
-			Pawn cw = new Pawn(b, new Position("c2"),Player.WHITE);
-			Pawn dw = new Pawn(b, new Position("d2"),Player.WHITE);
-			Pawn ew = new Pawn(b, new Position("e2"),Player.WHITE);
-			Pawn fw = new Pawn(b, new Position("f2"),Player.WHITE);
-			Pawn gw = new Pawn(b, new Position("g2"),Player.WHITE);
-			Pawn hw = new Pawn(b, new Position("h2"),Player.WHITE);
-			
-			Rook r1w = new Rook(b, new Position("a1"), Player.WHITE);
-			Rook r2w = new Rook(b, new Position("h1"), Player.WHITE);
-			Knight n1w = new Knight(b, new Position("b1"), Player.WHITE);
-			Knight n2w = new Knight(b, new Position("g1"), Player.WHITE);
-			Bishop b1w = new Bishop(b, new Position("c1"), Player.WHITE);
-			Bishop b2w = new Bishop(b, new Position("f1"), Player.WHITE);
-			Queen qw = new Queen(b, new Position("d1"), Player.WHITE);
-			King kw = new King(b, new Position("e1"), Player.WHITE);
-			
-			Pawn ab = new Pawn(b, new Position("a7"),Player.BLACK);
-			Pawn bb = new Pawn(b, new Position("b7"),Player.BLACK);
-			Pawn cb = new Pawn(b, new Position("c7"),Player.BLACK);
-			Pawn db = new Pawn(b, new Position("d7"),Player.BLACK);
-			Pawn eb = new Pawn(b, new Position("e7"),Player.BLACK);
-			Pawn fb = new Pawn(b, new Position("f7"),Player.BLACK);
-			Pawn gb = new Pawn(b, new Position("g7"),Player.BLACK);
-			Pawn hb = new Pawn(b, new Position("h7"),Player.BLACK);
-			
-			Rook r1b = new Rook(b, new Position("a8"), Player.BLACK);
-			Rook r2b = new Rook(b, new Position("h8"), Player.BLACK);
-			Knight n1b = new Knight(b, new Position("b8"), Player.BLACK);
-			Knight n2b = new Knight(b, new Position("g8"), Player.BLACK);
-			Bishop b1b = new Bishop(b, new Position("c8"), Player.BLACK);
-			Bishop b2b = new Bishop(b, new Position("f8"), Player.BLACK);
-			Queen qb = new Queen(b, new Position("d8"), Player.BLACK);
-			King kb = new King(b, new Position("e8"), Player.BLACK);
-			
-			this.board = new Piece[][] {
-				{r1b, n1b, b1b, qb, kb, b2b, n2b, r2b},
-				{ab,  bb,  cb,  db, eb, fb,  gb,  hb },
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{aw,  bw,  cw,  dw, ew, fw,  gw,  hw },
-				{r1w, n1w, b1w, qw, kw, b2w, n2w, r2w}
-			};
-			
-			List<Piece> white = new ArrayList<>();
-			white.add(aw); white.add(bw); white.add(cw); 
-			white.add(dw); white.add(ew); white.add(fw); 
-			white.add(gw); white.add(hw); white.add(r1w); 
-			white.add(r2w); white.add(n1w); white.add(n2w); 
-			white.add(b1w); white.add(b2w); white.add(qw); 
-			white.add(kw);
-			List<Piece> black = new ArrayList<>();
-			black.add(ab); black.add(bb); black.add(cb); 
-			black.add(db); black.add(eb); black.add(fb); 
-			black.add(gb); black.add(hb); black.add(r1b); 
-			black.add(r2b); black.add(n1b); black.add(n2b); 
-			black.add(b1b); black.add(b2b); black.add(qb); 
-			black.add(kb);
-			
-			this.pieces_player.put(Player.BLACK, black);
-			this.pieces_player.put(Player.WHITE, white);
-			
-		} catch (Exception e) {
-			System.out.print("Something went really wrong initializing the board\n");
-			System.exit(1);
-		}
+		
+		Pawn aw = new Pawn(b, new Position("a2"),Player.WHITE);
+		Pawn bw = new Pawn(b, new Position("b2"),Player.WHITE);
+		Pawn cw = new Pawn(b, new Position("c2"),Player.WHITE);
+		Pawn dw = new Pawn(b, new Position("d2"),Player.WHITE);
+		Pawn ew = new Pawn(b, new Position("e2"),Player.WHITE);
+		Pawn fw = new Pawn(b, new Position("f2"),Player.WHITE);
+		Pawn gw = new Pawn(b, new Position("g2"),Player.WHITE);
+		Pawn hw = new Pawn(b, new Position("h2"),Player.WHITE);
+		
+		Rook r1w = new Rook(b, new Position("a1"), Player.WHITE);
+		Rook r2w = new Rook(b, new Position("h1"), Player.WHITE);
+		Knight n1w = new Knight(b, new Position("b1"), Player.WHITE);
+		Knight n2w = new Knight(b, new Position("g1"), Player.WHITE);
+		Bishop b1w = new Bishop(b, new Position("c1"), Player.WHITE);
+		Bishop b2w = new Bishop(b, new Position("f1"), Player.WHITE);
+		Queen qw = new Queen(b, new Position("d1"), Player.WHITE);
+		King kw = new King(b, new Position("e1"), Player.WHITE);
+		
+		Pawn ab = new Pawn(b, new Position("a7"),Player.BLACK);
+		Pawn bb = new Pawn(b, new Position("b7"),Player.BLACK);
+		Pawn cb = new Pawn(b, new Position("c7"),Player.BLACK);
+		Pawn db = new Pawn(b, new Position("d7"),Player.BLACK);
+		Pawn eb = new Pawn(b, new Position("e7"),Player.BLACK);
+		Pawn fb = new Pawn(b, new Position("f7"),Player.BLACK);
+		Pawn gb = new Pawn(b, new Position("g7"),Player.BLACK);
+		Pawn hb = new Pawn(b, new Position("h7"),Player.BLACK);
+		
+		Rook r1b = new Rook(b, new Position("a8"), Player.BLACK);
+		Rook r2b = new Rook(b, new Position("h8"), Player.BLACK);
+		Knight n1b = new Knight(b, new Position("b8"), Player.BLACK);
+		Knight n2b = new Knight(b, new Position("g8"), Player.BLACK);
+		Bishop b1b = new Bishop(b, new Position("c8"), Player.BLACK);
+		Bishop b2b = new Bishop(b, new Position("f8"), Player.BLACK);
+		Queen qb = new Queen(b, new Position("d8"), Player.BLACK);
+		King kb = new King(b, new Position("e8"), Player.BLACK);
+		
+		this.board = new Piece[][] {
+			{r1b, n1b, b1b, qb, kb, b2b, n2b, r2b},
+			{ab,  bb,  cb,  db, eb, fb,  gb,  hb },
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{aw,  bw,  cw,  dw, ew, fw,  gw,  hw },
+			{r1w, n1w, b1w, qw, kw, b2w, n2w, r2w}
+		};
+		
+		List<Piece> white = new ArrayList<>();
+		white.add(aw); white.add(bw); white.add(cw); 
+		white.add(dw); white.add(ew); white.add(fw); 
+		white.add(gw); white.add(hw); white.add(r1w); 
+		white.add(r2w); white.add(n1w); white.add(n2w); 
+		white.add(b1w); white.add(b2w); white.add(qw); 
+		white.add(kw);
+		List<Piece> black = new ArrayList<>();
+		black.add(ab); black.add(bb); black.add(cb); 
+		black.add(db); black.add(eb); black.add(fb); 
+		black.add(gb); black.add(hb); black.add(r1b); 
+		black.add(r2b); black.add(n1b); black.add(n2b); 
+		black.add(b1b); black.add(b2b); black.add(qb); 
+		black.add(kb);
+		
+		this.pieces_player.put(Player.BLACK, black);
+		this.pieces_player.put(Player.WHITE, white);
+
 		
 	}
 

@@ -36,16 +36,12 @@ public class Game {
 		return this.display.showMenu() == Display.Menu.OK;		
 	}
 	
-	private int getMoveFromPlayer(Player p) {
+	private int getMoveFromPlayer(Player p) throws Exception {
 		
 		// Display assures move is valid or null
 		Move m = null;
-		try {
-			m = this.display.getMove(p);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		m = this.display.getMove(p);
+
 		
 		// null surrender
 		if (m == null) {
@@ -59,37 +55,27 @@ public class Game {
 		
 		// make move -- return if it can be made or not
 		if (this.board.makeMove(m, p)) {
-			try {
-				this.display.showBoard(this.board.getBoard());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.display.showBoard(this.board.getBoard());
 			return LEGAL;
 		}
 		return ILLEGAL; // valid move but with the actual board it is not possible to do
 	}
 	
 	
-	public int whiteState() {
+	public int whiteState() throws Exception {
 		if (this.first_move) {
-			try {
-				this.display.showBoard(this.board.getBoard());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.display.showBoard(this.board.getBoard());
 			this.first_move = false;
 		}
 			
 		return this.getMoveFromPlayer(Player.WHITE);
 	}
 	
-	public int blackState() {
+	public int blackState() throws Exception {
 		return this.getMoveFromPlayer(Player.BLACK);
 	}
 	
-	public Player resState() {
+	public Player resState() throws Exception {
 		
 		Player winner;
 		if (black_surrender)
@@ -102,12 +88,8 @@ public class Game {
 			return null;
 		else
 			winner = this.board.getPuntuation(Player.WHITE) == Integer.MAX_VALUE ? Player.WHITE : Player.BLACK;
-		try {
-			this.display.showWinner(winner);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		this.display.showWinner(winner);
 		return winner;
 	}
 

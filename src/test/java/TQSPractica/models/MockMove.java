@@ -3,10 +3,12 @@ package TQSPractica.models;
 public class MockMove implements Move {
 
 	private String str;
+	private int col;
 	
 	public MockMove(String string) {
 		// TODO Auto-generated constructor stub
 		str = string;
+		col = 1;
 	}
 
 	@Override
@@ -22,7 +24,7 @@ public class MockMove implements Move {
 		if (str.length() == 3) {
 			return Move.UNSET_COLUMN;
 		} 
-		return 1;
+		return col;
 	}
 
 	@Override
@@ -38,6 +40,10 @@ public class MockMove implements Move {
 	public boolean valid() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	public void setColumn(int c) {
+		this.col = c;
 	}
 
 }

@@ -43,7 +43,7 @@ public class TerminalDisplay implements Display {
 		if (in.equals("X")) m = null;
 		while(m != null && !m.valid()) {
 			System.out.println("This move doesn't make any sense, please try again.");
-			System.out.print("\t>["+player+"] next move:");
+			System.out.print("\t>["+player+"] next move(X to surrender):");
 			in = this.stdin.nextLine();
 			m = new MoveImp(in);
 			if (in.equals("X")) m = null;

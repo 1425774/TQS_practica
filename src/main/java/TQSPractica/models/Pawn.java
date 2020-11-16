@@ -130,4 +130,11 @@ public class Pawn extends Piece implements Observer {
 		arg0.deleteObserver(this);
 		
 	}
+
+
+	// only testing
+	public boolean getEnPassant() {
+		return this.enpassant_target;
+	}
+
 }

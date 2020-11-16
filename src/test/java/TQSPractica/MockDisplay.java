@@ -26,7 +26,7 @@ public class MockDisplay implements Display {
 		
 	}
 
-	public void blackwins(Game g) {
+	public void blackwins(Game g) throws Exception {
 		
 		Move[] moves = new MoveImp[] {
 				new MoveImp("e5"),
@@ -43,7 +43,7 @@ public class MockDisplay implements Display {
 		
 	}
 
-	public void whitewins(Game g) {
+	public void whitewins(Game g) throws Exception {
 		Move[] moves = new MoveImp[] {
 				new MoveImp("e4"),
 				new MoveImp("Bc4"),

@@ -63,7 +63,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testGetPices() {
+	public void testGetPices() throws Exception {
 		System.out.println("[TESTING: Board->getPieces(Player)] : Get the pieces of a player");
 		Board b = new BoardImp();
 		b.initBoard();
@@ -92,10 +92,13 @@ public class BoardTest {
 		
 		white = b.getPices(Player.WHITE);
 		assertTrue(white.size() == 15);
+		
+		// Wrong player
+		assertTrue(b.getPices(null) == null);
 	}
 
 	@Test
-	public void testGetPieceOn() {
+	public void testGetPieceOn() throws Exception {
 		Board b = new BoardImp();
 		b.initBoard();
 		Piece pawn;
@@ -164,7 +167,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testMove() {
+	public void testMove() throws Exception {
 		System.out.println("[TESTING: Board->move(piece, from, to)] : Make a move, lower level");
 		Board b = new BoardImp();
 		b.initBoard();
@@ -176,12 +179,17 @@ public class BoardTest {
 		// Wrong stuff -- invalid movements
 		assertFalse(b.move(aux, new Position("e7"), new Position("e3")));
 		assertFalse(b.move(aux, new Position("e2"), new Position("e5")));
+		// Wrong stuff -- bad positions
+		assertFalse(b.move(aux, new Position("skajd"), new Position("e3")));
+		assertFalse(b.move(aux, new Position("e2"), new Position("askjd")));
+		assertFalse(b.move(aux, new Position("asdj"), new Position("askjd")));
+		
 		// Good ones
 		assertTrue(b.move(aux, new Position("e2"), new Position("e4")));
 	}
 
 	@Test
-	public void testGetDimensions() {
+	public void testGetDimensions() throws Exception {
 		System.out.println("[TESTING: Board->getDimensions()] : Get dimensions of the board");
 		Board b = new BoardImp();
 		b.initBoard();
@@ -224,7 +232,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testMakeMove() {
+	public void testMakeMove() throws Exception {
 		System.out.println("[TESTING: Board->makeMove(Move, Player)] : Make a move, higer level");
 		Board b = new BoardImp();
 		b.initBoard();
@@ -246,12 +254,23 @@ public class BoardTest {
 		assertTrue(b.makeMove(new MockMove("Ne2"), Player.WHITE));
 		assertFalse(b.makeMove(new MockMove("Nc3"), Player.WHITE));
 		// Good one -- ambigous
-		assertTrue(b.makeMove(new MockMove("bNc3"), Player.WHITE));
+		assertTrue(b.makeMove(new MockMove("Nbc3"), Player.WHITE));
+		b = new BoardImp();
+		b.initBoard();
+		// set up
+		assertTrue(b.makeMove(new MockMove("e3"), Player.WHITE));
+		assertTrue(b.makeMove(new MockMove("Ne2"), Player.WHITE));
+		assertFalse(b.makeMove(new MockMove("Nc3"), Player.WHITE));
+		// Good one -- ambigous
+		MockMove m = new MockMove("Nec3");
+		m.setColumn(4);
+		assertTrue(b.makeMove(m, Player.WHITE));
+		
 		
 	}
 
 	@Test
-	public void testGetPuntuationPlayer() {
+	public void testGetPuntuationPlayer() throws Exception {
 		System.out.println("[TESTING: Board->getPuntuation(Player)] : Get diff of puntuation");
 		Board b = new BoardImp();
 		b.initBoard();
@@ -292,7 +311,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testGetPuntuation() {
+	public void testGetPuntuation() throws Exception {
 		System.out.println("[TESTING: Board->getPuntuation()] : Get diff of puntuation for both players");
 		Board b = new BoardImp();
 		b.initBoard();
@@ -325,7 +344,7 @@ public class BoardTest {
 	}
 
 	@Test
-	public void testIsGameOver() {
+	public void testIsGameOver() throws Exception {
 		System.out.println("[TESTING: Board->isGameOver()] : Did the game end?");
 		
 		Board b = new BoardImp();

@@ -17,7 +17,7 @@ public interface Board {
 
 	public Piece getPieceOn(Position pos);
 	
-	public void initBoard();
+	public void initBoard() throws Exception;
 	
 	public boolean makeMove(Move m, Player p);
 	

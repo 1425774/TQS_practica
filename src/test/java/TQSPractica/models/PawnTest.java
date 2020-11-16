@@ -282,5 +282,26 @@ public class PawnTest {
 				);
 		assertEquals(1, p.getPieceValue());
 	}
+	
+	@Test
+	public void testUpdate() throws Exception {
+		System.out.println("[TESTING: Pawn->Update()] : En passant");
+		Pawn p = new Pawn(
+					new MockBoard(),
+					new Position("e2"),
+					Player.WHITE
+				);
+		assertFalse(p.getEnPassant());
+		p.moveTo(new Position("e4"));
+		assertTrue(p.getEnPassant());
+		p.update(new MockBoard(), 1);
+		assertFalse(p.getEnPassant());
+		p.moveTo(new Position("e5"));
+		assertFalse(p.getEnPassant());
+		p.update(new MockBoard(), 1);
+		assertFalse(p.getEnPassant());
+		
+		
+	}
 
 }

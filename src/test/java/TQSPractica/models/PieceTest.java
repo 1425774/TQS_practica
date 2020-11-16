@@ -48,6 +48,48 @@ public class PieceTest {
 	}
 	
 	@Test
+	public void testPiece() {
+		System.out.println("[TESTING: Piece->Piece()] : Constructor");
+		// What ever piece will work
+		// Bad one -- position
+		MockBoard b = new MockBoard();
+		Position bad = new Position("lskdjlsk");
+		Position e4 = new Position("e4");
+		try {
+			King n2 = new King(b, bad, Player.BLACK);
+			fail("Should throw exception a bad position.");
+		} catch (Exception e) {
+			// It worked
+		}
+		
+		bad = null;
+		try {
+			King n3 = new King(b, bad, Player.BLACK);
+			fail("Should throw exception a bad position.");
+		} catch (Exception e) {
+			// It worked
+		}
+		
+		// A bad one (Player)
+		b = null;
+		try {
+			King n4 = new King(b, e4, null);
+			fail("Should throw exception a bad owner.");
+		} catch (Exception e) {
+			// It worked
+		}
+		
+		// A bad one (board)
+		b = null;
+		try {
+			King n4 = new King(b, e4, Player.BLACK);
+			fail("Should throw exception a bad board.");
+		} catch (Exception e) {
+			// It worked
+		}
+	}
+	
+	@Test
 	public void testgetPieceValue() throws Exception {
 		// Same as above but it won't hurt to have an extra test
 		System.out.println("[TESTING: Piece->getPieceValue()] : Weight of the piece in the game");
@@ -170,6 +212,60 @@ public class PieceTest {
 		
 		Piece p2 = new Pawn(board, pos2, Player.BLACK);
 		assertEquals(pos2, p2.getCurrentPosition());
+		
+	}
+	
+	@Test
+	public void testMoveTo() throws Exception {
+		System.out.println("[TESTING: Piece->moveTo()] : Move to a place in the board");
+		MockBoard board = new MockBoard();
+		Position p = new Position("e4");
+		Player owner = Player.BLACK;
+		Piece[] pieces = {
+				new Pawn(board, p,owner),
+				new Knight(board, p, owner),
+				new Rook(board, p, owner),
+				new Queen(board, p, owner),
+				new Bishop(board, p, owner),
+				new King(board, p, owner)
+		};
+		
+		Position[] valid_moves = {
+				new Position("e2"),
+				new Position("d6"),
+				new Position("e6"),
+				new Position("e6"),
+				new Position("d5"),
+				new Position("e5")
+		};
+		Position[] nonvalid_moves = {
+				new Position("e7"),
+				new Position("e6"),
+				new Position("a1"),
+				new Position("a1"),
+				new Position("d6"),
+				new Position("e6")
+		};
+		Position[] null_moves = {
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+		};
+		
+		for (int i = 0; i < null_moves.length; i++) {
+			assertFalse(pieces[i].moveTo(null_moves[i]));
+		}
+		
+		for (int i = 0; i < nonvalid_moves.length; i++) {
+			assertFalse(pieces[i].moveTo(nonvalid_moves[i]));
+		}
+		
+		for (int i = 0; i < valid_moves.length; i++) {
+			assertTrue(pieces[i].moveTo(valid_moves[i]));
+		}
 		
 	}
 

@@ -328,5 +328,31 @@ public class PositionTest {
 			assertEquals(Arrays.toString(solutions[i]), Arrays.toString(aux));
 		}
 	}
+	
+	@Test
+	public void testequals() { 
+		System.out.println("[TESTING: Position->equals(Position)]");
+		
+		Position a = new Position("e2");
+		Position b = new Position("e2");
+		
+		// Some good ones
+		assertTrue(a.equals(b));
+		a = new Position("c5");
+		b = new Position("c5");
+		assertTrue(a.equals(b));
+		a = new Position("asda"); // null one
+		b = new Position("casda");
+		assertTrue(a.equals(b));
+		
+		// Bad ones
+		a = new Position("e2");
+		assertFalse(a.equals(b));
+		b = null;
+		assertFalse(a.equals(b));
+		b = new Position("e3");
+		assertFalse(a.equals(b));
+		
+	}
 
 }

@@ -89,6 +89,7 @@ public class Position {
 	}
 	
 	public boolean equals(Position p) {
+		if(p == null) return false;
 		return p.getTileId() == this.getTileId();
 	}
 

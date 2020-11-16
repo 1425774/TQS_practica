@@ -77,14 +77,16 @@ public class MoveImp implements Move {
 		
 		char[] cols = {'a','b','c','d','e','f','g','h'};
 		int index_of_char = this.piece == Pawn.class ? 0 : 1;
-
-		for (int i = 0; i < cols.length; i++) {
+		
+		boolean match = false;
+		int i = 0;
+		while(!match) {
 			if (string.charAt(index_of_char) == cols[i]) {
 				this.column = i;
-				return;
+				match = true;
 			}
-		}
-		
+			++i;
+		}		
 	}
 
 
