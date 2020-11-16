@@ -99,7 +99,7 @@ public class BishopTest {
 		Position[] res;
 		
 		// Empty board
-		bi = new Bishop(b, e4, Player.BLACK);   // Center
+		bi = new Bishop(b, e4, Player.BLACK);   // Center // Path 5
 		exp = new Position[] {
 				d5, c6, b7, a8,
 				f5, g6, h7,
@@ -108,28 +108,28 @@ public class BishopTest {
 		};
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, a8, Player.BLACK);   // Corner -top left
+		bi = new Bishop(b, a8, Player.BLACK);   // Corner -top left // Path 2
 		exp = new Position[] {
 				d5, c6, b7, e4,
 				f3, g2, h1
 		};
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right
+		bi = new Bishop(b, h1, Player.BLACK);   // Corner -bottom right // Path 6
 		exp = new Position[] {
 				d5, c6, b7, a8,
 				f3, g2, e4
 		};
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, h8, Player.BLACK);   // Corner -top left
+		bi = new Bishop(b, h8, Player.BLACK);   // Corner -top right //Path 3
 		exp = new Position[] {
 				g7, f6, e5, d4,
 				c3, b2, a1
 		};
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
-		bi = new Bishop(b, a1, Player.BLACK);   // Corner -bottom left
+		bi = new Bishop(b, a1, Player.BLACK);   // Corner -bottom left // Path 4
 		exp = new Position[] {
 				g7, f6, e5, d4,
 				c3, b2, h8
@@ -137,20 +137,18 @@ public class BishopTest {
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		
-		// Filled board -- same team
+		// Filled board -- same team // Path 1
 		bi = new Bishop(b, e4, Player.BLACK);
 		exp = new Position[] {
-				f5, g6, h7,
-				d3, c2,
-				f3
 		};
 		b.setPiece(new Queen(b, d5, Player.BLACK));
-		b.setPiece(new Queen(b, g2, Player.BLACK));
-		b.setPiece(new Queen(b, b1, Player.BLACK));
+		b.setPiece(new Queen(b, d3, Player.BLACK));
+		b.setPiece(new Queen(b, f5, Player.BLACK));
+		b.setPiece(new Queen(b, f3, Player.BLACK));
 		res = bi.getPossibleMoves();
 		assertTrue(PawnTest.comaprePositionsArray(exp, res));
 		b.clean();
-		// Filled board -- Opposite team
+		// Filled board -- Opposite team 
 		bi = new Bishop(b, e4, Player.WHITE);
 		exp = new Position[] {
 				f5, g6, h7, d5,
