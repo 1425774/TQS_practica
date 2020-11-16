@@ -30,3 +30,8 @@ The valid squares start at "a1" all the way to "h1" going up till "h8"
 ###### Some examples:
 + Move a knight to the square c3 = "Nc3"
 + Move a pawn to e4 = "e4"
+
+### Things to take into account
++ The movement castle isn't in this version.
++ There is no option to choose the piece the pawn promotes to. It will promote to a queen in this version.
++ You need to kill the king to win.
