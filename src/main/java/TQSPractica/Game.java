@@ -101,6 +101,7 @@ public class Game {
 		while (!exit) {
 			// Create a new game
 			Game controller = new Game(display);
+			boolean white_turn = true;
 			
 			// Show menu
 			exit = !controller.menuState();
@@ -109,25 +110,16 @@ public class Game {
 			
 			// Start Game
 			while (controller.resState() == null) {
-				// White turn
-				int valid = controller.whiteState();
-				if (valid == SURRENDER) continue;
-				while(valid != LEGAL) {
-					System.out.println("\tThis move can't be placed or it is ambigous. Try again");
-					valid = controller.whiteState();
-				}
 				
-				// Black turn
-				valid = controller.blackState();
+				int valid = white_turn ? controller.whiteState() : controller.blackState();
 				if (valid == SURRENDER) continue;
 				while(valid != LEGAL) {
 					System.out.println("\tThis move can't be placed or it is ambigous. Try again");
-					valid = controller.blackState();
+					valid = white_turn ? controller.whiteState() : controller.blackState();
 				}
+				white_turn = !white_turn;
 			}
-			
 		}
-		
 	}
 
 	public Display getDisplay() {
