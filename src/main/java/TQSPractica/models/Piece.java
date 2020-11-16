@@ -41,9 +41,7 @@ public abstract class Piece {
 	}
 	
 	public Position[] getPossibleMoves() {
-		if (this.possibleMoves == null) {
-			this.generatePossibleMoves();
-		}
+		this.generatePossibleMoves();
 		return possibleMoves.toArray(new Position[possibleMoves.size()]);
 	}
 	
